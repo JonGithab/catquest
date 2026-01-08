@@ -79,7 +79,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
               className="text-center mb-8"
             >
               <h1 className="font-display text-5xl font-bold text-shadow-game mb-2">
-                <span className="text-primary">Luv</span>
+                <span className="text-primary">Cat</span>
                 <span className="text-secondary">Quest</span>
               </h1>
               <p className="text-muted-foreground">A Colorful Platformer Adventure</p>
