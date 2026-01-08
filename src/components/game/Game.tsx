@@ -34,7 +34,7 @@ export const Game = () => {
   // Handle music based on game state and level theme
   useEffect(() => {
     if (gameState.isPlaying && level && !gameState.isPaused && !gameState.isGameOver && !gameState.isLevelComplete) {
-      playMusic(level.theme as 'meadow' | 'forest' | 'sky');
+      playMusic(level.theme);
     } else if (gameState.isPaused || gameState.isGameOver || !gameState.isPlaying) {
       stopMusic();
     }

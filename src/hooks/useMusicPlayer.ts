@@ -8,11 +8,11 @@ export const useMusicPlayer = () => {
   const activeNodesRef = useRef<AudioNode[]>([]);
   const isPlayingRef = useRef(false);
   const currentThemeRef = useRef<Theme | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const getAudioContext = useCallback(() => {
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       masterGainRef.current = audioContextRef.current.createGain();
       masterGainRef.current.gain.value = 0.15;
       masterGainRef.current.connect(audioContextRef.current.destination);
@@ -42,20 +42,19 @@ export const useMusicPlayer = () => {
     activeNodesRef.current = [];
   }, []);
 
-  const playMeadowMusic = useCallback(() => {
+  const playThemeMusic = useCallback((theme: Theme) => {
     const ctx = getAudioContext();
     if (!masterGainRef.current) return;
 
-    // Cheerful, bright melody with birds-like chirps
-    const playChord = () => {
+    const playMeadowChord = () => {
       if (!isPlayingRef.current || currentThemeRef.current !== 'meadow') return;
       
       const notes = [
-        [261.63, 329.63, 392.00], // C major
-        [293.66, 369.99, 440.00], // D major
-        [329.63, 415.30, 493.88], // E major
-        [349.23, 440.00, 523.25], // F major
-        [392.00, 493.88, 587.33], // G major
+        [261.63, 329.63, 392.00],
+        [293.66, 369.99, 440.00],
+        [329.63, 415.30, 493.88],
+        [349.23, 440.00, 523.25],
+        [392.00, 493.88, 587.33],
       ];
       
       const chord = notes[Math.floor(Math.random() * notes.length)];
@@ -85,7 +84,6 @@ export const useMusicPlayer = () => {
         activeNodesRef.current.push(osc, gain, filter);
       });
 
-      // Bird chirp
       if (Math.random() > 0.5) {
         const chirp = ctx.createOscillator();
         const chirpGain = ctx.createGain();
@@ -108,23 +106,14 @@ export const useMusicPlayer = () => {
       }
     };
 
-    playChord();
-    intervalRef.current = setInterval(playChord, 2500);
-  }, [getAudioContext]);
-
-  const playForestMusic = useCallback(() => {
-    const ctx = getAudioContext();
-    if (!masterGainRef.current) return;
-
-    // Mysterious, twilight atmosphere with minor chords
-    const playAmbience = () => {
+    const playForestAmbience = () => {
       if (!isPlayingRef.current || currentThemeRef.current !== 'forest') return;
       
       const notes = [
-        [220.00, 261.63, 329.63], // A minor
-        [196.00, 233.08, 293.66], // G minor
-        [174.61, 207.65, 261.63], // F minor
-        [164.81, 196.00, 246.94], // E minor
+        [220.00, 261.63, 329.63],
+        [196.00, 233.08, 293.66],
+        [174.61, 207.65, 261.63],
+        [164.81, 196.00, 246.94],
       ];
       
       const chord = notes[Math.floor(Math.random() * notes.length)];
@@ -154,7 +143,6 @@ export const useMusicPlayer = () => {
         activeNodesRef.current.push(osc, gain, filter);
       });
 
-      // Owl hoot
       if (Math.random() > 0.7) {
         const hoot = ctx.createOscillator();
         const hootGain = ctx.createGain();
@@ -176,22 +164,13 @@ export const useMusicPlayer = () => {
       }
     };
 
-    playAmbience();
-    intervalRef.current = setInterval(playAmbience, 3000);
-  }, [getAudioContext]);
-
-  const playSkyMusic = useCallback(() => {
-    const ctx = getAudioContext();
-    if (!masterGainRef.current) return;
-
-    // Ethereal, dreamy space atmosphere
-    const playPad = () => {
+    const playSkyPad = () => {
       if (!isPlayingRef.current || currentThemeRef.current !== 'sky') return;
       
       const notes = [
-        [130.81, 164.81, 196.00, 261.63], // C add9
-        [146.83, 174.61, 220.00, 293.66], // D add9
-        [110.00, 138.59, 164.81, 220.00], // A add9
+        [130.81, 164.81, 196.00, 261.63],
+        [146.83, 174.61, 220.00, 293.66],
+        [110.00, 138.59, 164.81, 220.00],
       ];
       
       const chord = notes[Math.floor(Math.random() * notes.length)];
@@ -210,7 +189,7 @@ export const useMusicPlayer = () => {
         osc.frequency.value = freq;
         
         osc2.type = 'sine';
-        osc2.frequency.value = freq * 1.005; // Slight detune for shimmer
+        osc2.frequency.value = freq * 1.005;
         
         osc.connect(filter);
         osc2.connect(filter);
@@ -230,7 +209,6 @@ export const useMusicPlayer = () => {
         activeNodesRef.current.push(osc, osc2, gain, filter);
       });
 
-      // Twinkling stars
       for (let s = 0; s < 3; s++) {
         const twinkle = ctx.createOscillator();
         const twinkleGain = ctx.createGain();
@@ -252,19 +230,9 @@ export const useMusicPlayer = () => {
       }
     };
 
-    playPad();
-    intervalRef.current = setInterval(playPad, 4000);
-  }, [getAudioContext]);
-
-  const playMetroMusic = useCallback(() => {
-    const ctx = getAudioContext();
-    if (!masterGainRef.current) return;
-
-    // Underground ambient atmosphere with train sounds
-    const playAmbience = () => {
+    const playMetroAmbience = () => {
       if (!isPlayingRef.current || currentThemeRef.current !== 'metro') return;
       
-      // Deep rumbling bass drone
       const drone = ctx.createOscillator();
       const droneGain = ctx.createGain();
       const droneFilter = ctx.createBiquadFilter();
@@ -289,7 +257,6 @@ export const useMusicPlayer = () => {
       
       activeNodesRef.current.push(drone, droneGain, droneFilter);
 
-      // Distant train rumble
       if (Math.random() > 0.4) {
         const bufferSize = ctx.sampleRate * 2;
         const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -321,17 +288,12 @@ export const useMusicPlayer = () => {
         activeNodesRef.current.push(noise, filter, gain);
       }
 
-      // Announcement chime (occasional)
       if (Math.random() > 0.85) {
         const chime1 = ctx.createOscillator();
-        const chime2 = ctx.createOscillator();
         const chimeGain = ctx.createGain();
         
         chime1.type = 'sine';
         chime1.frequency.value = 880;
-        
-        chime2.type = 'sine';
-        chime2.frequency.value = 1174.66;
         
         chimeGain.gain.setValueAtTime(0, ctx.currentTime + 2);
         chimeGain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 2.05);
@@ -343,25 +305,9 @@ export const useMusicPlayer = () => {
         chime1.start(ctx.currentTime + 2);
         chime1.stop(ctx.currentTime + 2.4);
         
-        setTimeout(() => {
-          const chimeGain2 = ctx.createGain();
-          chimeGain2.gain.setValueAtTime(0, ctx.currentTime);
-          chimeGain2.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.05);
-          chimeGain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-          
-          chime2.connect(chimeGain2);
-          chimeGain2.connect(masterGainRef.current!);
-          
-          chime2.start(ctx.currentTime);
-          chime2.stop(ctx.currentTime + 0.4);
-          
-          activeNodesRef.current.push(chime2, chimeGain2);
-        }, 2400);
-        
         activeNodesRef.current.push(chime1, chimeGain);
       }
 
-      // Echoing footsteps
       if (Math.random() > 0.6) {
         for (let i = 0; i < 3; i++) {
           const click = ctx.createOscillator();
@@ -390,19 +336,10 @@ export const useMusicPlayer = () => {
       }
     };
 
-    playAmbience();
-    intervalRef.current = setInterval(playAmbience, 4500);
-  }, [getAudioContext]);
-
-  const playGenericMusic = useCallback(() => {
-    const ctx = getAudioContext();
-    if (!masterGainRef.current) return;
-
-    // Generic ambient for other themes
-    const playPad = () => {
+    const playGenericPad = () => {
       if (!isPlayingRef.current) return;
       
-      const notes = [196.00, 246.94, 293.66]; // G3, B3, D4
+      const notes = [196.00, 246.94, 293.66];
       
       notes.forEach((freq, i) => {
         const osc = ctx.createOscillator();
@@ -425,8 +362,28 @@ export const useMusicPlayer = () => {
       });
     };
 
-    playPad();
-    intervalRef.current = setInterval(playPad, 3500);
+    switch (theme) {
+      case 'meadow':
+        playMeadowChord();
+        intervalRef.current = setInterval(playMeadowChord, 2500);
+        break;
+      case 'forest':
+        playForestAmbience();
+        intervalRef.current = setInterval(playForestAmbience, 3000);
+        break;
+      case 'sky':
+        playSkyPad();
+        intervalRef.current = setInterval(playSkyPad, 4000);
+        break;
+      case 'metro':
+        playMetroAmbience();
+        intervalRef.current = setInterval(playMetroAmbience, 4500);
+        break;
+      default:
+        playGenericPad();
+        intervalRef.current = setInterval(playGenericPad, 3500);
+        break;
+    }
   }, [getAudioContext]);
 
   const playMusic = useCallback((theme: Theme) => {
@@ -436,30 +393,13 @@ export const useMusicPlayer = () => {
     isPlayingRef.current = true;
     currentThemeRef.current = theme;
 
-    // Resume audio context if suspended (browser autoplay policy)
     const ctx = getAudioContext();
     if (ctx.state === 'suspended') {
       ctx.resume();
     }
 
-    switch (theme) {
-      case 'meadow':
-        playMeadowMusic();
-        break;
-      case 'forest':
-        playForestMusic();
-        break;
-      case 'sky':
-        playSkyMusic();
-        break;
-      case 'metro':
-        playMetroMusic();
-        break;
-      default:
-        playGenericMusic();
-        break;
-    }
-  }, [getAudioContext, stopMusic, playMeadowMusic, playForestMusic, playSkyMusic, playMetroMusic, playGenericMusic]);
+    playThemeMusic(theme);
+  }, [getAudioContext, stopMusic, playThemeMusic]);
 
   const setVolume = useCallback((volume: number) => {
     if (masterGainRef.current) {
@@ -467,7 +407,6 @@ export const useMusicPlayer = () => {
     }
   }, []);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       stopMusic();
