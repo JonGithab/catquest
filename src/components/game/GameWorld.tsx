@@ -738,7 +738,7 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                 </div>
               </div>
             ))}
-            {/* C2 Building sign */}
+            {/* GWCC Parks sign */}
             <div 
               className="absolute top-6"
               style={{ left: 300 - cameraOffset * 0.15 }}
