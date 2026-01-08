@@ -1,6 +1,6 @@
 import { useCallback, useRef, useEffect } from 'react';
 
-type Theme = 'meadow' | 'forest' | 'sky';
+type Theme = 'meadow' | 'forest' | 'sky' | 'building' | 'whitten' | 'donuts' | 'c2' | 'rooftop' | 'metro';
 
 export const useMusicPlayer = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -256,6 +256,179 @@ export const useMusicPlayer = () => {
     intervalRef.current = setInterval(playPad, 4000);
   }, [getAudioContext]);
 
+  const playMetroMusic = useCallback(() => {
+    const ctx = getAudioContext();
+    if (!masterGainRef.current) return;
+
+    // Underground ambient atmosphere with train sounds
+    const playAmbience = () => {
+      if (!isPlayingRef.current || currentThemeRef.current !== 'metro') return;
+      
+      // Deep rumbling bass drone
+      const drone = ctx.createOscillator();
+      const droneGain = ctx.createGain();
+      const droneFilter = ctx.createBiquadFilter();
+      
+      droneFilter.type = 'lowpass';
+      droneFilter.frequency.value = 150;
+      
+      drone.type = 'sawtooth';
+      drone.frequency.value = 55 + Math.random() * 10;
+      
+      drone.connect(droneFilter);
+      droneFilter.connect(droneGain);
+      droneGain.connect(masterGainRef.current!);
+      
+      droneGain.gain.setValueAtTime(0, ctx.currentTime);
+      droneGain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 0.5);
+      droneGain.gain.setValueAtTime(0.15, ctx.currentTime + 3);
+      droneGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 4);
+      
+      drone.start(ctx.currentTime);
+      drone.stop(ctx.currentTime + 4);
+      
+      activeNodesRef.current.push(drone, droneGain, droneFilter);
+
+      // Distant train rumble
+      if (Math.random() > 0.4) {
+        const bufferSize = ctx.sampleRate * 2;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * 0.5;
+        }
+        
+        const noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+        
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 100;
+        
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0, ctx.currentTime + 1);
+        gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 1.5);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 3);
+        
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGainRef.current!);
+        
+        noise.start(ctx.currentTime + 1);
+        noise.stop(ctx.currentTime + 3);
+        
+        activeNodesRef.current.push(noise, filter, gain);
+      }
+
+      // Announcement chime (occasional)
+      if (Math.random() > 0.85) {
+        const chime1 = ctx.createOscillator();
+        const chime2 = ctx.createOscillator();
+        const chimeGain = ctx.createGain();
+        
+        chime1.type = 'sine';
+        chime1.frequency.value = 880;
+        
+        chime2.type = 'sine';
+        chime2.frequency.value = 1174.66;
+        
+        chimeGain.gain.setValueAtTime(0, ctx.currentTime + 2);
+        chimeGain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 2.05);
+        chimeGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 2.5);
+        
+        chime1.connect(chimeGain);
+        chimeGain.connect(masterGainRef.current!);
+        
+        chime1.start(ctx.currentTime + 2);
+        chime1.stop(ctx.currentTime + 2.4);
+        
+        setTimeout(() => {
+          const chimeGain2 = ctx.createGain();
+          chimeGain2.gain.setValueAtTime(0, ctx.currentTime);
+          chimeGain2.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.05);
+          chimeGain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+          
+          chime2.connect(chimeGain2);
+          chimeGain2.connect(masterGainRef.current!);
+          
+          chime2.start(ctx.currentTime);
+          chime2.stop(ctx.currentTime + 0.4);
+          
+          activeNodesRef.current.push(chime2, chimeGain2);
+        }, 2400);
+        
+        activeNodesRef.current.push(chime1, chimeGain);
+      }
+
+      // Echoing footsteps
+      if (Math.random() > 0.6) {
+        for (let i = 0; i < 3; i++) {
+          const click = ctx.createOscillator();
+          const clickGain = ctx.createGain();
+          const clickFilter = ctx.createBiquadFilter();
+          
+          clickFilter.type = 'highpass';
+          clickFilter.frequency.value = 800;
+          
+          click.type = 'square';
+          click.frequency.value = 100 + Math.random() * 50;
+          
+          clickGain.gain.setValueAtTime(0, ctx.currentTime + 0.5 + i * 0.4);
+          clickGain.gain.linearRampToValueAtTime(0.03, ctx.currentTime + 0.5 + i * 0.4 + 0.01);
+          clickGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5 + i * 0.4 + 0.1);
+          
+          click.connect(clickFilter);
+          clickFilter.connect(clickGain);
+          clickGain.connect(masterGainRef.current!);
+          
+          click.start(ctx.currentTime + 0.5 + i * 0.4);
+          click.stop(ctx.currentTime + 0.5 + i * 0.4 + 0.15);
+          
+          activeNodesRef.current.push(click, clickFilter, clickGain);
+        }
+      }
+    };
+
+    playAmbience();
+    intervalRef.current = setInterval(playAmbience, 4500);
+  }, [getAudioContext]);
+
+  const playGenericMusic = useCallback(() => {
+    const ctx = getAudioContext();
+    if (!masterGainRef.current) return;
+
+    // Generic ambient for other themes
+    const playPad = () => {
+      if (!isPlayingRef.current) return;
+      
+      const notes = [196.00, 246.94, 293.66]; // G3, B3, D4
+      
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        
+        osc.connect(gain);
+        gain.connect(masterGainRef.current!);
+        
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 3);
+        
+        osc.start(ctx.currentTime + i * 0.1);
+        osc.stop(ctx.currentTime + 3);
+        
+        activeNodesRef.current.push(osc, gain);
+      });
+    };
+
+    playPad();
+    intervalRef.current = setInterval(playPad, 3500);
+  }, [getAudioContext]);
+
   const playMusic = useCallback((theme: Theme) => {
     if (currentThemeRef.current === theme && isPlayingRef.current) return;
     
@@ -279,8 +452,14 @@ export const useMusicPlayer = () => {
       case 'sky':
         playSkyMusic();
         break;
+      case 'metro':
+        playMetroMusic();
+        break;
+      default:
+        playGenericMusic();
+        break;
     }
-  }, [getAudioContext, stopMusic, playMeadowMusic, playForestMusic, playSkyMusic]);
+  }, [getAudioContext, stopMusic, playMeadowMusic, playForestMusic, playSkyMusic, playMetroMusic, playGenericMusic]);
 
   const setVolume = useCallback((volume: number) => {
     if (masterGainRef.current) {
