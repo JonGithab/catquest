@@ -271,10 +271,10 @@ export const levels: Level[] = [
     portal: { id: 'portal-5', x: 2300, y: 440, targetLevel: 6, active: true },
   },
 
-  // Level 6 - Donuts Building (Flying donuts and coffee spills)
+  // Level 6 - Dunkin' Donuts (Flying donuts and coffee spills)
   {
     id: 6,
-    name: 'Donuts Building',
+    name: "Dunkin' Donuts",
     theme: 'donuts',
     background: 'gradient-donuts',
     width: 2600,
