@@ -82,7 +82,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                 <span className="text-primary">Cat</span>
                 <span className="text-secondary">Quest</span>
               </h1>
-              <p className="text-muted-foreground">A Colorful Platformer Adventure</p>
+              <p className="text-muted-foreground">A Colorful Laborer Adventure</p>
             </motion.div>
 
             {/* Character Selection */}
