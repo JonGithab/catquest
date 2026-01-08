@@ -25,6 +25,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(250 50% 25%) 0%, hsl(270 45% 20%) 50%, hsl(280 40% 15%) 100%)';
       case 'building':
         return 'linear-gradient(180deg, hsl(25 30% 25%) 0%, hsl(20 25% 20%) 50%, hsl(15 20% 15%) 100%)';
+      case 'whitten':
+        return 'linear-gradient(180deg, hsl(35 40% 85%) 0%, hsl(25 35% 75%) 50%, hsl(20 50% 55%) 100%)';
       default:
         return 'var(--gradient-sky)';
     }
@@ -228,6 +230,101 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                 />
               </div>
             ))}
+          </>
+        )}
+
+        {level.theme === 'whitten' && (
+          <>
+            {/* Terracotta wall texture background */}
+            <div 
+              className="absolute inset-0 opacity-15"
+              style={{
+                backgroundImage: `
+                  repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 24px,
+                    hsl(20 45% 50%) 24px,
+                    hsl(20 45% 50%) 26px
+                  ),
+                  repeating-linear-gradient(
+                    90deg,
+                    hsl(22 50% 55%),
+                    hsl(22 50% 55%) 50px,
+                    hsl(20 45% 50%) 50px,
+                    hsl(20 45% 50%) 52px
+                  )
+                `,
+                transform: `translateX(${-cameraOffset * 0.1}px)`,
+              }}
+            />
+            {/* Washington DC Flags */}
+            {[180, 550, 950, 1350, 1750, 2150].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 60,
+                }}
+              >
+                {/* Flag pole */}
+                <div className="w-1 h-32 bg-amber-800 mx-auto" />
+                {/* DC Flag */}
+                <div 
+                  className="absolute top-2 left-2 w-16 h-10 rounded-sm overflow-hidden"
+                  style={{
+                    background: 'white',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  {/* Two red bars at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 h-3 flex">
+                    <div className="flex-1 bg-red-600" />
+                    <div className="w-1 bg-white" />
+                    <div className="flex-1 bg-red-600" />
+                  </div>
+                  {/* Three red stars at top */}
+                  <div className="absolute top-1 left-0 right-0 flex justify-center gap-1">
+                    <div className="text-red-600 text-xs">★</div>
+                    <div className="text-red-600 text-xs">★</div>
+                    <div className="text-red-600 text-xs">★</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Decorative arched windows */}
+            {[350, 750, 1150, 1550, 1950].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 120,
+                }}
+              >
+                <div 
+                  className="w-12 h-20 rounded-t-full"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(200 60% 70%) 0%, hsl(200 50% 50%) 100%)',
+                    border: '3px solid hsl(20 40% 40%)',
+                    boxShadow: 'inset 0 0 15px rgba(255,255,255,0.3)',
+                  }}
+                >
+                  {/* Window cross */}
+                  <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-amber-900/60" />
+                  <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-amber-900/60 -translate-x-1/2" />
+                </div>
+              </div>
+            ))}
+            {/* Ornate ceiling molding */}
+            <div 
+              className="absolute top-0 left-0 right-0 h-4"
+              style={{
+                background: 'linear-gradient(180deg, hsl(25 45% 45%) 0%, hsl(22 40% 55%) 100%)',
+                borderBottom: '2px solid hsl(20 35% 35%)',
+              }}
+            />
           </>
         )}
 
