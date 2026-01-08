@@ -1,4 +1,4 @@
-// Game Types for LuvQuest
+// Game Types for CatQuest
 
 export type CharacterType = 'luna' | 'blaze';
 
