@@ -66,7 +66,7 @@ export interface Portal {
 export interface Level {
   id: number;
   name: string;
-  theme: 'meadow' | 'forest' | 'sky' | 'building' | 'whitten' | 'donuts' | 'c2';
+  theme: 'meadow' | 'forest' | 'sky' | 'building' | 'whitten' | 'donuts' | 'c2' | 'rooftop';
   background: string;
   platforms: Platform[];
   enemies: Enemy[];

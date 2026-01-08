@@ -31,6 +31,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(330 70% 85%) 0%, hsl(25 80% 75%) 50%, hsl(35 60% 65%) 100%)';
       case 'c2':
         return 'linear-gradient(180deg, hsl(220 40% 15%) 0%, hsl(210 45% 12%) 50%, hsl(200 50% 8%) 100%)';
+      case 'rooftop':
+        return 'linear-gradient(180deg, hsl(25 60% 65%) 0%, hsl(35 70% 55%) 30%, hsl(220 50% 40%) 100%)';
       default:
         return 'var(--gradient-sky)';
     }
@@ -758,6 +760,204 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                 `,
                 backgroundSize: '40px 40px',
                 transform: `translateX(${-cameraOffset * 0.02}px)`,
+              }}
+            />
+          </>
+        )}
+
+        {level.theme === 'rooftop' && (
+          <>
+            {/* Sunset/dusk sky gradient overlay */}
+            <div 
+              className="absolute inset-0 opacity-30"
+              style={{
+                background: 'radial-gradient(ellipse at 80% 20%, hsl(40 90% 70%) 0%, transparent 50%)',
+              }}
+            />
+            {/* Sun setting */}
+            <div 
+              className="absolute w-20 h-20 rounded-full"
+              style={{
+                left: 650 - cameraOffset * 0.05,
+                top: 30,
+                background: 'radial-gradient(circle, hsl(40 100% 70%) 0%, hsl(30 90% 55%) 60%, transparent 100%)',
+                boxShadow: '0 0 60px hsl(40 90% 60% / 0.6), 0 0 100px hsl(35 85% 50% / 0.3)',
+              }}
+            />
+            {/* City skyline - far background */}
+            <div 
+              className="absolute bottom-32 left-0 right-0"
+              style={{ transform: `translateX(${-cameraOffset * 0.1}px)` }}
+            >
+              {/* Distant buildings silhouette */}
+              {[
+                { x: 50, w: 40, h: 180 },
+                { x: 100, w: 60, h: 220 },
+                { x: 170, w: 35, h: 160 },
+                { x: 220, w: 80, h: 280 },
+                { x: 310, w: 45, h: 200 },
+                { x: 370, w: 70, h: 240 },
+                { x: 450, w: 50, h: 190 },
+                { x: 520, w: 90, h: 300 },
+                { x: 620, w: 40, h: 170 },
+                { x: 680, w: 65, h: 250 },
+                { x: 760, w: 55, h: 210 },
+                { x: 830, w: 85, h: 320 },
+                { x: 930, w: 45, h: 180 },
+                { x: 990, w: 70, h: 260 },
+                { x: 1080, w: 50, h: 200 },
+                { x: 1150, w: 100, h: 340 },
+                { x: 1270, w: 60, h: 230 },
+                { x: 1350, w: 75, h: 280 },
+              ].map((b, i) => (
+                <div
+                  key={i}
+                  className="absolute bottom-0"
+                  style={{
+                    left: b.x,
+                    width: b.w,
+                    height: b.h,
+                    background: 'linear-gradient(180deg, hsl(220 30% 25%) 0%, hsl(220 35% 18%) 100%)',
+                    borderRadius: '4px 4px 0 0',
+                  }}
+                >
+                  {/* Windows */}
+                  {Array.from({ length: Math.floor(b.h / 25) }).map((_, row) => (
+                    <div key={row} className="flex justify-around px-1 mt-2">
+                      {Array.from({ length: Math.floor(b.w / 15) }).map((_, col) => (
+                        <div
+                          key={col}
+                          className="w-2 h-3 rounded-sm"
+                          style={{
+                            background: Math.random() > 0.3 
+                              ? 'hsl(45 80% 70%)' 
+                              : 'hsl(220 20% 30%)',
+                            boxShadow: Math.random() > 0.3 
+                              ? '0 0 4px hsl(45 80% 60%)' 
+                              : 'none',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            {/* Mid-ground buildings */}
+            <div 
+              className="absolute bottom-32 left-0 right-0"
+              style={{ transform: `translateX(${-cameraOffset * 0.2}px)` }}
+            >
+              {[
+                { x: 80, w: 50, h: 120 },
+                { x: 180, w: 70, h: 150 },
+                { x: 280, w: 55, h: 100 },
+                { x: 380, w: 90, h: 180 },
+                { x: 500, w: 60, h: 130 },
+                { x: 600, w: 80, h: 160 },
+                { x: 720, w: 65, h: 140 },
+                { x: 820, w: 100, h: 200 },
+                { x: 960, w: 55, h: 120 },
+                { x: 1060, w: 75, h: 170 },
+              ].map((b, i) => (
+                <div
+                  key={i}
+                  className="absolute bottom-0"
+                  style={{
+                    left: b.x,
+                    width: b.w,
+                    height: b.h,
+                    background: 'linear-gradient(180deg, hsl(220 25% 30%) 0%, hsl(220 30% 22%) 100%)',
+                    borderRadius: '3px 3px 0 0',
+                  }}
+                >
+                  {/* Lit windows */}
+                  {Array.from({ length: Math.floor(b.h / 20) }).map((_, row) => (
+                    <div key={row} className="flex justify-around px-1 mt-1.5">
+                      {Array.from({ length: Math.floor(b.w / 12) }).map((_, col) => (
+                        <div
+                          key={col}
+                          className="w-1.5 h-2 rounded-sm"
+                          style={{
+                            background: Math.random() > 0.4 
+                              ? 'hsl(40 75% 65%)' 
+                              : 'hsl(220 25% 35%)',
+                            boxShadow: Math.random() > 0.4 
+                              ? '0 0 3px hsl(40 75% 55%)' 
+                              : 'none',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            {/* Water towers on distant buildings */}
+            {[180, 520, 900, 1200].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset * 0.1,
+                  top: 180 + (i % 2) * 40,
+                }}
+              >
+                <div 
+                  className="w-6 h-8 rounded-t"
+                  style={{ background: 'hsl(220 20% 35%)' }}
+                />
+                <div className="w-1 h-4 bg-gray-600 mx-auto" />
+              </div>
+            ))}
+            {/* Antenna on tallest building */}
+            <div 
+              className="absolute"
+              style={{
+                left: 565 - cameraOffset * 0.1,
+                top: 80,
+              }}
+            >
+              <div className="w-0.5 h-20 bg-gray-500 mx-auto" />
+              <div 
+                className="w-2 h-2 rounded-full bg-red-500 -mt-1 mx-auto animate-pulse"
+                style={{ boxShadow: '0 0 8px hsl(0 80% 50%)' }}
+              />
+            </div>
+            {/* Birds flying */}
+            {[200, 400, 550, 750].map((x, i) => (
+              <div
+                key={i}
+                className="absolute text-gray-600 text-sm animate-pulse"
+                style={{
+                  left: x - cameraOffset * 0.3,
+                  top: 100 + (i % 3) * 30,
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              >
+                ∿
+              </div>
+            ))}
+            {/* Clouds at sunset */}
+            <div 
+              className="absolute top-20 w-32 h-8 rounded-full opacity-40"
+              style={{ 
+                left: 100 - cameraOffset * 0.15,
+                background: 'linear-gradient(90deg, hsl(30 70% 70%), hsl(40 80% 75%))',
+              }}
+            />
+            <div 
+              className="absolute top-40 w-24 h-6 rounded-full opacity-30"
+              style={{ 
+                left: 350 - cameraOffset * 0.15,
+                background: 'linear-gradient(90deg, hsl(35 75% 72%), hsl(45 85% 78%))',
+              }}
+            />
+            <div 
+              className="absolute top-28 w-28 h-7 rounded-full opacity-35"
+              style={{ 
+                left: 600 - cameraOffset * 0.15,
+                background: 'linear-gradient(90deg, hsl(32 72% 68%), hsl(42 82% 74%))',
               }}
             />
           </>
