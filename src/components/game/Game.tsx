@@ -31,7 +31,7 @@ export const Game = () => {
       <MainMenu 
         onStartGame={startGame} 
         onSelectLevel={(levelId) => {
-          startGame('luna');
+          startGame('hywon');
           setTimeout(() => selectLevel(levelId), 100);
         }}
       />

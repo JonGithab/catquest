@@ -8,7 +8,7 @@ interface PlayerProps {
 }
 
 export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => {
-  const isLuna = characterType === 'luna';
+  const isHywon = characterType === 'hywon';
   
   return (
     <motion.div
@@ -30,10 +30,10 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
         {/* Main body */}
         <div 
           className={`absolute inset-0 rounded-t-full rounded-b-lg ${
-            isLuna ? 'bg-primary' : 'bg-accent'
+            isHywon ? 'bg-primary' : 'bg-accent'
           }`}
           style={{
-            boxShadow: isLuna 
+            boxShadow: isHywon 
               ? 'inset -4px -4px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3)'
               : 'inset -4px -4px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3)',
           }}
@@ -59,8 +59,8 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           
           {/* Cheeks (blush) */}
           <div className="flex gap-6 -mt-0.5">
-            <div className={`w-2 h-1 rounded-full ${isLuna ? 'bg-pink-300' : 'bg-orange-300'} opacity-60`} />
-            <div className={`w-2 h-1 rounded-full ${isLuna ? 'bg-pink-300' : 'bg-orange-300'} opacity-60`} />
+            <div className={`w-2 h-1 rounded-full ${isHywon ? 'bg-pink-300' : 'bg-orange-300'} opacity-60`} />
+            <div className={`w-2 h-1 rounded-full ${isHywon ? 'bg-pink-300' : 'bg-orange-300'} opacity-60`} />
           </div>
           
           {/* Smile */}
@@ -69,8 +69,8 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           />
         </div>
 
-        {/* Luna's bow / Blaze's flame */}
-        {isLuna ? (
+        {/* Hywon's bow / Junnior's flame */}
+        {isHywon ? (
           <div className="absolute -top-2 left-1/2 -translate-x-1/2">
             <div className="w-6 h-3 bg-secondary rounded-full" />
             <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-secondary rounded-full" />

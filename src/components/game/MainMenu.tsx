@@ -12,7 +12,7 @@ interface MainMenuProps {
 }
 
 export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
-  const [selectedCharacter, setSelectedCharacter] = useState<CharacterType>('luna');
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterType>('hywon');
   const [showLevelSelect, setShowLevelSelect] = useState(false);
 
   const characterList = Object.values(characters);
@@ -107,7 +107,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                   >
                     {/* Character preview */}
                     <div className={`w-12 h-14 mx-auto mb-2 rounded-t-full rounded-b-lg ${
-                      char.id === 'luna' ? 'bg-primary' : 'bg-accent'
+                      char.id === 'hywon' ? 'bg-primary' : 'bg-accent'
                     } relative`}>
                       {/* Eyes */}
                       <div className="absolute top-2 left-0 right-0 flex justify-center gap-1.5">
@@ -115,7 +115,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                         <div className="w-2 h-2.5 bg-card rounded-full" />
                       </div>
                       {/* Ability indicator */}
-                      {char.id === 'luna' ? (
+                      {char.id === 'hywon' ? (
                         <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-2 bg-secondary rounded-full" />
                       ) : (
                         <motion.div 
@@ -128,7 +128,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                     
                     <h4 className="font-display font-bold text-foreground">{char.name}</h4>
                     <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground mt-1">
-                      {char.id === 'luna' ? (
+                      {char.id === 'hywon' ? (
                         <Sparkles className="w-3 h-3" />
                       ) : (
                         <Zap className="w-3 h-3" />
@@ -167,7 +167,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
               <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                 <div>← → or A/D: Move</div>
                 <div>↑, W or Space: Jump</div>
-                <div>Shift: {selectedCharacter === 'luna' ? 'Double Jump (in air)' : 'Fire Dash'}</div>
+                <div>Shift: {selectedCharacter === 'hywon' ? 'Double Jump (in air)' : 'Fire Dash'}</div>
                 <div>ESC: Pause</div>
               </div>
             </div>
