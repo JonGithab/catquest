@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { GameState, PlayerState, CharacterType, Position, Velocity, Collectible, Enemy } from '@/types/game';
 import { getLevel } from '@/data/levels';
 import { getCharacter } from '@/data/characters';
+import { useSoundEffects } from './useSoundEffects';
 
 const GRAVITY = 0.6;
 const TERMINAL_VELOCITY = 15;
@@ -51,6 +52,8 @@ export const useGameEngine = () => {
   const lastTimeRef = useRef<number>(0);
   const doubleJumpAvailable = useRef(true);
   const dashCooldown = useRef(false);
+  
+  const sounds = useSoundEffects();
 
   const level = getLevel(gameState.currentLevel);
   const character = getCharacter(gameState.selectedCharacter);
@@ -165,8 +168,11 @@ export const useGameEngine = () => {
     setGameState(prev => {
       if (prev.player.isInvulnerable) return prev;
       
+      sounds.playDamageSound();
+      
       const newHealth = prev.player.health - 1;
       if (newHealth <= 0) {
+        sounds.playGameOverSound();
         return {
           ...prev,
           player: { ...prev.player, health: 0 },
@@ -190,7 +196,7 @@ export const useGameEngine = () => {
         },
       };
     });
-  }, []);
+  }, [sounds]);
 
   // Game loop
   const gameLoop = useCallback((timestamp: number) => {
@@ -236,6 +242,7 @@ export const useGameEngine = () => {
         newVy = -character.jumpPower;
         isGrounded = false;
         doubleJumpAvailable.current = prev.selectedCharacter === 'hywon';
+        sounds.playJumpSound();
         keysPressed.current.delete('ArrowUp');
         keysPressed.current.delete('w');
         keysPressed.current.delete(' ');
@@ -243,6 +250,7 @@ export const useGameEngine = () => {
       } else if (jump && !isGrounded && doubleJumpAvailable.current && prev.selectedCharacter === 'hywon') {
         newVy = -character.jumpPower * 0.85;
         doubleJumpAvailable.current = false;
+        sounds.playDoubleJumpSound();
         keysPressed.current.delete('ArrowUp');
         keysPressed.current.delete('w');
         keysPressed.current.delete(' ');
@@ -253,6 +261,7 @@ export const useGameEngine = () => {
       if (dash && prev.selectedCharacter === 'junnior' && !dashCooldown.current) {
         newVx = facingRight ? 15 : -15;
         dashCooldown.current = true;
+        sounds.playDashSound();
         setTimeout(() => { dashCooldown.current = false; }, 800);
         keysPressed.current.delete('Shift');
         mobileInputs.current.dash = false;
@@ -390,6 +399,15 @@ export const useGameEngine = () => {
 
         const playerPos = gameState.player.position;
         if (checkCollision(playerPos, 40, 50, { x: collectible.x, y: collectible.y }, 30, 30)) {
+          // Play appropriate sound
+          if (collectible.type === 'coin') {
+            sounds.playCoinSound();
+          } else if (collectible.type === 'star') {
+            sounds.playStarSound();
+          } else if (collectible.type === 'heart') {
+            sounds.playHeartSound();
+          }
+          
           setGameState(prev => {
             let newState = { ...prev };
             if (collectible.type === 'coin') {
@@ -416,12 +434,13 @@ export const useGameEngine = () => {
     if (level.portal) {
       const playerPos = gameState.player.position;
       if (checkCollision(playerPos, 40, 50, { x: level.portal.x, y: level.portal.y }, 60, 80)) {
+        sounds.playLevelCompleteSound();
         setGameState(prev => ({ ...prev, isLevelComplete: true }));
       }
     }
 
     gameLoopRef.current = requestAnimationFrame(gameLoop);
-  }, [level, gameState.isPaused, gameState.isGameOver, gameState.isLevelComplete, gameState.player.position, character, takeDamage]);
+  }, [level, gameState.isPaused, gameState.isGameOver, gameState.isLevelComplete, gameState.player.position, character, takeDamage, sounds]);
 
   // Keyboard controls
   useEffect(() => {
