@@ -27,6 +27,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(25 30% 25%) 0%, hsl(20 25% 20%) 50%, hsl(15 20% 15%) 100%)';
       case 'whitten':
         return 'linear-gradient(180deg, hsl(35 40% 85%) 0%, hsl(25 35% 75%) 50%, hsl(20 50% 55%) 100%)';
+      case 'donuts':
+        return 'linear-gradient(180deg, hsl(330 70% 85%) 0%, hsl(25 80% 75%) 50%, hsl(35 60% 65%) 100%)';
       default:
         return 'var(--gradient-sky)';
     }
@@ -325,6 +327,180 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                 borderBottom: '2px solid hsl(20 35% 35%)',
               }}
             />
+          </>
+        )}
+
+        {level.theme === 'donuts' && (
+          <>
+            {/* Dunkin-style pink/orange background pattern */}
+            <div 
+              className="absolute inset-0 opacity-10"
+              style={{
+                backgroundImage: `
+                  radial-gradient(circle at 20% 30%, hsl(330 80% 70%) 0%, transparent 30%),
+                  radial-gradient(circle at 80% 60%, hsl(25 90% 65%) 0%, transparent 25%),
+                  radial-gradient(circle at 50% 80%, hsl(330 70% 75%) 0%, transparent 35%)
+                `,
+              }}
+            />
+            {/* Flying donuts */}
+            {[
+              { x: 120, y: 80, color: 'hsl(330 70% 65%)', sprinkles: true },
+              { x: 350, y: 140, color: 'hsl(30 80% 55%)', sprinkles: false },
+              { x: 600, y: 60, color: 'hsl(280 60% 65%)', sprinkles: true },
+              { x: 850, y: 120, color: 'hsl(45 85% 60%)', sprinkles: false },
+              { x: 1100, y: 70, color: 'hsl(330 75% 60%)', sprinkles: true },
+              { x: 1400, y: 130, color: 'hsl(200 70% 60%)', sprinkles: false },
+              { x: 1650, y: 90, color: 'hsl(25 80% 60%)', sprinkles: true },
+              { x: 1900, y: 150, color: 'hsl(330 65% 70%)', sprinkles: false },
+              { x: 2150, y: 80, color: 'hsl(120 50% 55%)', sprinkles: true },
+              { x: 2400, y: 120, color: 'hsl(45 80% 55%)', sprinkles: true },
+            ].map((donut, i) => (
+              <div
+                key={i}
+                className="absolute animate-bounce"
+                style={{
+                  left: donut.x - cameraOffset * 0.5,
+                  top: donut.y,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: '2s',
+                }}
+              >
+                {/* Donut body */}
+                <div 
+                  className="w-10 h-10 rounded-full relative"
+                  style={{
+                    background: donut.color,
+                    boxShadow: `inset -3px -3px 8px rgba(0,0,0,0.2), 2px 4px 8px rgba(0,0,0,0.3)`,
+                  }}
+                >
+                  {/* Donut hole */}
+                  <div 
+                    className="absolute top-1/2 left-1/2 w-4 h-4 rounded-full -translate-x-1/2 -translate-y-1/2"
+                    style={{ background: 'hsl(330 70% 85%)' }}
+                  />
+                  {/* Sprinkles */}
+                  {donut.sprinkles && (
+                    <>
+                      <div className="absolute top-1 left-2 w-1 h-2 bg-yellow-400 rotate-45 rounded-full" />
+                      <div className="absolute top-2 right-1 w-1 h-2 bg-blue-400 -rotate-30 rounded-full" />
+                      <div className="absolute bottom-2 left-1 w-1 h-2 bg-green-400 rotate-12 rounded-full" />
+                      <div className="absolute bottom-1 right-2 w-1 h-2 bg-red-400 -rotate-45 rounded-full" />
+                      <div className="absolute top-3 left-5 w-1 h-2 bg-purple-400 rotate-60 rounded-full" />
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
+            {/* Coffee cups with spilling coffee */}
+            {[300, 750, 1200, 1650, 2100].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 420,
+                }}
+              >
+                {/* Coffee cup */}
+                <div 
+                  className="w-8 h-12 rounded-b-lg relative"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(0 0% 95%) 0%, hsl(0 0% 85%) 100%)',
+                    border: '2px solid hsl(0 0% 75%)',
+                  }}
+                >
+                  {/* Cup handle */}
+                  <div 
+                    className="absolute -right-2 top-2 w-3 h-5 border-2 border-gray-400 rounded-r-full bg-transparent"
+                  />
+                  {/* Coffee inside */}
+                  <div 
+                    className="absolute top-1 left-0.5 right-0.5 h-4 rounded-t"
+                    style={{ background: 'hsl(25 70% 25%)' }}
+                  />
+                  {/* Dunkin logo stripe */}
+                  <div 
+                    className="absolute top-5 left-0 right-0 h-2"
+                    style={{ background: 'linear-gradient(90deg, hsl(330 80% 55%), hsl(25 90% 55%))' }}
+                  />
+                </div>
+                {/* Spilling coffee */}
+                <div 
+                  className="absolute -left-4 top-2 w-6 h-16"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(25 70% 25%) 0%, hsl(25 60% 20% / 0.6) 50%, transparent 100%)',
+                    borderRadius: '0 0 50% 50%',
+                    transform: 'rotate(-20deg)',
+                  }}
+                />
+                {/* Coffee splashes */}
+                <div 
+                  className="absolute -left-6 top-16 w-4 h-4 rounded-full"
+                  style={{ background: 'hsl(25 65% 25% / 0.7)' }}
+                />
+                <div 
+                  className="absolute -left-2 top-18 w-3 h-3 rounded-full"
+                  style={{ background: 'hsl(25 60% 22% / 0.5)' }}
+                />
+              </div>
+            ))}
+            {/* Steam rising from cups */}
+            {[300, 750, 1200, 1650, 2100].map((x, i) => (
+              <div
+                key={`steam-${i}`}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset + 2,
+                  top: 400,
+                }}
+              >
+                {[0, 1, 2].map((s) => (
+                  <div
+                    key={s}
+                    className="absolute w-1 h-6 opacity-40 animate-pulse"
+                    style={{
+                      left: s * 4,
+                      background: 'linear-gradient(180deg, transparent, hsl(0 0% 90%), transparent)',
+                      animationDelay: `${s * 0.3}s`,
+                      borderRadius: '50%',
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
+            {/* "DONUTS" neon sign */}
+            <div 
+              className="absolute top-8"
+              style={{ left: 400 - cameraOffset * 0.2 }}
+            >
+              <div 
+                className="px-4 py-2 text-2xl font-bold tracking-wider"
+                style={{
+                  color: 'hsl(330 90% 65%)',
+                  textShadow: '0 0 10px hsl(330 90% 65%), 0 0 20px hsl(330 80% 55%), 0 0 30px hsl(330 70% 50%)',
+                  fontFamily: 'sans-serif',
+                }}
+              >
+                DONUTS
+              </div>
+            </div>
+            {/* Another sign further in level */}
+            <div 
+              className="absolute top-12"
+              style={{ left: 1600 - cameraOffset * 0.2 }}
+            >
+              <div 
+                className="px-3 py-1 text-xl font-bold"
+                style={{
+                  color: 'hsl(25 95% 60%)',
+                  textShadow: '0 0 10px hsl(25 95% 60%), 0 0 20px hsl(25 85% 50%)',
+                  fontFamily: 'sans-serif',
+                }}
+              >
+                COFFEE ☕
+              </div>
+            </div>
           </>
         )}
 
