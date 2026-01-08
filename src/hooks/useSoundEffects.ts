@@ -206,6 +206,148 @@ export const useSoundEffects = () => {
     });
   }, [getAudioContext]);
 
+  const playTrainArrivalSound = useCallback(() => {
+    const ctx = getAudioContext();
+    
+    // Train rumble approaching
+    const bufferSize = ctx.sampleRate * 3;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    
+    for (let i = 0; i < bufferSize; i++) {
+      const t = i / ctx.sampleRate;
+      // Low frequency rumble with increasing intensity
+      data[i] = (Math.random() * 2 - 1) * Math.min(1, t * 0.5) * 0.6;
+    }
+    
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+    
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(80, ctx.currentTime);
+    filter.frequency.linearRampToValueAtTime(200, ctx.currentTime + 2);
+    filter.frequency.linearRampToValueAtTime(100, ctx.currentTime + 3);
+    
+    const gainNode = ctx.createGain();
+    gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.4, ctx.currentTime + 1.5);
+    gainNode.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 2.5);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 3);
+    
+    noise.connect(filter);
+    filter.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    
+    noise.start(ctx.currentTime);
+    noise.stop(ctx.currentTime + 3);
+
+    // Brake screech
+    setTimeout(() => {
+      const screech = ctx.createOscillator();
+      const screechGain = ctx.createGain();
+      const screechFilter = ctx.createBiquadFilter();
+      
+      screechFilter.type = 'bandpass';
+      screechFilter.frequency.value = 3000;
+      screechFilter.Q.value = 10;
+      
+      screech.type = 'sawtooth';
+      screech.frequency.setValueAtTime(2500, ctx.currentTime);
+      screech.frequency.linearRampToValueAtTime(1800, ctx.currentTime + 0.8);
+      
+      screechGain.gain.setValueAtTime(0.15, ctx.currentTime);
+      screechGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+      
+      screech.connect(screechFilter);
+      screechFilter.connect(screechGain);
+      screechGain.connect(ctx.destination);
+      
+      screech.start(ctx.currentTime);
+      screech.stop(ctx.currentTime + 0.8);
+    }, 2000);
+  }, [getAudioContext]);
+
+  const playMetroAnnouncementSound = useCallback(() => {
+    const ctx = getAudioContext();
+    
+    // Two-tone chime (like DC Metro)
+    const playTone = (freq: number, delay: number) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      
+      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + delay + 0.05);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime + delay + 0.3);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + delay + 0.5);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + 0.5);
+    };
+    
+    // Classic two-note chime
+    playTone(880, 0);      // A5
+    playTone(1174.66, 0.4); // D6
+  }, [getAudioContext]);
+
+  const playDoorChimeSound = useCallback(() => {
+    const ctx = getAudioContext();
+    
+    // Three-tone door closing chime
+    const notes = [659.25, 783.99, 659.25]; // E5, G5, E5
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.15);
+      gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + i * 0.15 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.2);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.start(ctx.currentTime + i * 0.15);
+      osc.stop(ctx.currentTime + i * 0.15 + 0.2);
+    });
+  }, [getAudioContext]);
+
+  const playTrainDepartSound = useCallback(() => {
+    const ctx = getAudioContext();
+    
+    // Motor hum starting up
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    
+    filter.type = 'lowpass';
+    filter.frequency.value = 300;
+    
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(60, ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(120, ctx.currentTime + 1);
+    osc.frequency.linearRampToValueAtTime(180, ctx.currentTime + 2);
+    
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 1);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 2.5);
+    
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 2.5);
+  }, [getAudioContext]);
+
   return {
     playJumpSound,
     playDoubleJumpSound,
@@ -216,5 +358,9 @@ export const useSoundEffects = () => {
     playDashSound,
     playLevelCompleteSound,
     playGameOverSound,
+    playTrainArrivalSound,
+    playMetroAnnouncementSound,
+    playDoorChimeSound,
+    playTrainDepartSound,
   };
 };
