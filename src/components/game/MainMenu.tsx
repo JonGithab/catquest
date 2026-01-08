@@ -1,0 +1,216 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Play, Users, Map, Sparkles, Zap, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { CharacterType } from '@/types/game';
+import { characters } from '@/data/characters';
+import { levels } from '@/data/levels';
+
+interface MainMenuProps {
+  onStartGame: (character: CharacterType) => void;
+  onSelectLevel: (level: number) => void;
+}
+
+export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterType>('luna');
+  const [showLevelSelect, setShowLevelSelect] = useState(false);
+
+  const characterList = Object.values(characters);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4 gradient-sky">
+      {/* Background decorations */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Clouds */}
+        <motion.div
+          className="absolute top-20 w-32 h-12 bg-white/40 rounded-full"
+          animate={{ x: [-100, window.innerWidth + 100] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          style={{ left: -100 }}
+        />
+        <motion.div
+          className="absolute top-40 w-24 h-10 bg-white/30 rounded-full"
+          animate={{ x: [-100, window.innerWidth + 100] }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear", delay: 5 }}
+          style={{ left: -100 }}
+        />
+        <motion.div
+          className="absolute top-32 w-40 h-14 bg-white/35 rounded-full"
+          animate={{ x: [-100, window.innerWidth + 100] }}
+          transition={{ duration: 35, repeat: Infinity, ease: "linear", delay: 10 }}
+          style={{ left: -100 }}
+        />
+        
+        {/* Floating sparkles */}
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-accent rounded-full"
+            initial={{
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+            }}
+            animate={{
+              y: [null, -20, 20],
+              opacity: [0.3, 1, 0.3],
+              scale: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="game-card max-w-lg w-full relative z-10"
+      >
+        {!showLevelSelect ? (
+          <>
+            {/* Title */}
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", damping: 10 }}
+              className="text-center mb-8"
+            >
+              <h1 className="font-display text-5xl font-bold text-shadow-game mb-2">
+                <span className="text-primary">Luv</span>
+                <span className="text-secondary">Quest</span>
+              </h1>
+              <p className="text-muted-foreground">A Colorful Platformer Adventure</p>
+            </motion.div>
+
+            {/* Character Selection */}
+            <div className="mb-6">
+              <h3 className="font-display text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                Choose Your Hero
+              </h3>
+              
+              <div className="grid grid-cols-2 gap-3">
+                {characterList.map((char) => (
+                  <motion.button
+                    key={char.id}
+                    onClick={() => setSelectedCharacter(char.id as CharacterType)}
+                    className={`p-4 rounded-xl border-3 transition-all ${
+                      selectedCharacter === char.id
+                        ? 'border-primary bg-primary/10 shadow-lg'
+                        : 'border-border bg-card hover:border-primary/50'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {/* Character preview */}
+                    <div className={`w-12 h-14 mx-auto mb-2 rounded-t-full rounded-b-lg ${
+                      char.id === 'luna' ? 'bg-primary' : 'bg-accent'
+                    } relative`}>
+                      {/* Eyes */}
+                      <div className="absolute top-2 left-0 right-0 flex justify-center gap-1.5">
+                        <div className="w-2 h-2.5 bg-card rounded-full" />
+                        <div className="w-2 h-2.5 bg-card rounded-full" />
+                      </div>
+                      {/* Ability indicator */}
+                      {char.id === 'luna' ? (
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-2 bg-secondary rounded-full" />
+                      ) : (
+                        <motion.div 
+                          className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-4 bg-orange-500 rounded-t-full"
+                          animate={{ y: [0, -2, 0] }}
+                          transition={{ duration: 0.4, repeat: Infinity }}
+                        />
+                      )}
+                    </div>
+                    
+                    <h4 className="font-display font-bold text-foreground">{char.name}</h4>
+                    <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground mt-1">
+                      {char.id === 'luna' ? (
+                        <Sparkles className="w-3 h-3" />
+                      ) : (
+                        <Zap className="w-3 h-3" />
+                      )}
+                      {char.ability}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{char.description}</p>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={() => onStartGame(selectedCharacter)}
+                className="game-button bg-primary text-primary-foreground hover:bg-primary/90 w-full text-xl py-6"
+              >
+                <Play className="w-6 h-6 mr-2" />
+                Start Adventure
+              </Button>
+              
+              <Button
+                onClick={() => setShowLevelSelect(true)}
+                variant="secondary"
+                className="game-button bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full"
+              >
+                <Map className="w-5 h-5 mr-2" />
+                Select Level
+              </Button>
+            </div>
+
+            {/* Controls hint */}
+            <div className="mt-6 p-4 bg-muted/50 rounded-xl">
+              <h4 className="font-display font-semibold text-sm text-foreground mb-2">Controls</h4>
+              <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                <div>← → or A/D: Move</div>
+                <div>↑, W or Space: Jump</div>
+                <div>Shift: {selectedCharacter === 'luna' ? 'Double Jump (in air)' : 'Fire Dash'}</div>
+                <div>ESC: Pause</div>
+              </div>
+            </div>
+          </>
+        ) : (
+          /* Level Selection */
+          <>
+            <button
+              onClick={() => setShowLevelSelect(false)}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors"
+            >
+              <ChevronRight className="w-4 h-4 rotate-180" />
+              Back
+            </button>
+            
+            <h2 className="font-display text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
+              <Map className="w-6 h-6" />
+              Select Level
+            </h2>
+            
+            <div className="flex flex-col gap-3">
+              {levels.map((level) => (
+                <motion.button
+                  key={level.id}
+                  onClick={() => onSelectLevel(level.id)}
+                  className="p-4 rounded-xl border-2 border-border bg-card hover:border-primary hover:bg-primary/5 transition-all text-left"
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-sm text-muted-foreground">Level {level.id}</span>
+                      <h3 className="font-display font-bold text-lg text-foreground">{level.name}</h3>
+                      <p className="text-sm text-muted-foreground capitalize">{level.theme} theme</p>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </>
+        )}
+      </motion.div>
+    </div>
+  );
+};

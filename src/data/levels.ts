@@ -1,0 +1,151 @@
+import { Level } from '@/types/game';
+
+export const levels: Level[] = [
+  // Level 1 - Sunny Meadow (Tutorial-ish, easy)
+  {
+    id: 1,
+    name: 'Sunny Meadow',
+    theme: 'meadow',
+    background: 'gradient-sky',
+    width: 1600,
+    height: 600,
+    playerStart: { x: 100, y: 400 },
+    platforms: [
+      // Ground
+      { id: 'ground-1', x: 0, y: 520, width: 400, height: 80, type: 'grass' },
+      { id: 'ground-2', x: 500, y: 520, width: 300, height: 80, type: 'grass' },
+      { id: 'ground-3', x: 900, y: 520, width: 400, height: 80, type: 'grass' },
+      { id: 'ground-4', x: 1400, y: 520, width: 200, height: 80, type: 'grass' },
+      // Floating platforms
+      { id: 'plat-1', x: 200, y: 400, width: 120, height: 30, type: 'grass' },
+      { id: 'plat-2', x: 400, y: 320, width: 100, height: 30, type: 'grass' },
+      { id: 'plat-3', x: 600, y: 380, width: 150, height: 30, type: 'grass' },
+      { id: 'plat-4', x: 850, y: 300, width: 100, height: 30, type: 'grass' },
+      { id: 'plat-5', x: 1050, y: 380, width: 120, height: 30, type: 'grass' },
+      { id: 'plat-6', x: 1250, y: 300, width: 100, height: 30, type: 'grass' },
+    ],
+    enemies: [
+      { id: 'enemy-1', x: 550, y: 480, width: 40, height: 40, type: 'slime', speed: 1, direction: 1, patrolStart: 500, patrolEnd: 750 },
+      { id: 'enemy-2', x: 1000, y: 480, width: 40, height: 40, type: 'slime', speed: 1.5, direction: -1, patrolStart: 900, patrolEnd: 1250 },
+    ],
+    collectibles: [
+      { id: 'coin-1', x: 250, y: 360, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-2', x: 450, y: 280, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-3', x: 650, y: 340, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-4', x: 900, y: 260, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-5', x: 1100, y: 340, type: 'coin', collected: false, value: 10 },
+      { id: 'star-1', x: 1300, y: 260, type: 'star', collected: false, value: 50 },
+      { id: 'heart-1', x: 700, y: 480, type: 'heart', collected: false, value: 1 },
+    ],
+    portal: { id: 'portal-1', x: 1480, y: 440, targetLevel: 2, active: true },
+  },
+  
+  // Level 2 - Enchanted Forest (Medium difficulty)
+  {
+    id: 2,
+    name: 'Enchanted Forest',
+    theme: 'forest',
+    background: 'gradient-sunset',
+    width: 1800,
+    height: 600,
+    playerStart: { x: 80, y: 400 },
+    platforms: [
+      // Ground sections with gaps
+      { id: 'ground-1', x: 0, y: 520, width: 300, height: 80, type: 'grass' },
+      { id: 'ground-2', x: 400, y: 520, width: 200, height: 80, type: 'stone' },
+      { id: 'ground-3', x: 700, y: 520, width: 300, height: 80, type: 'grass' },
+      { id: 'ground-4', x: 1150, y: 520, width: 200, height: 80, type: 'stone' },
+      { id: 'ground-5', x: 1500, y: 520, width: 300, height: 80, type: 'grass' },
+      // Multi-level platforms
+      { id: 'plat-1', x: 150, y: 420, width: 100, height: 25, type: 'stone' },
+      { id: 'plat-2', x: 300, y: 340, width: 120, height: 25, type: 'grass' },
+      { id: 'plat-3', x: 500, y: 400, width: 80, height: 25, type: 'stone' },
+      { id: 'plat-4', x: 650, y: 320, width: 100, height: 25, type: 'grass' },
+      { id: 'plat-5', x: 800, y: 380, width: 120, height: 25, type: 'stone' },
+      { id: 'plat-6', x: 950, y: 280, width: 100, height: 25, type: 'grass' },
+      { id: 'plat-7', x: 1100, y: 380, width: 80, height: 25, type: 'stone' },
+      { id: 'plat-8', x: 1250, y: 300, width: 120, height: 25, type: 'grass' },
+      { id: 'plat-9', x: 1400, y: 400, width: 100, height: 25, type: 'stone' },
+      { id: 'plat-10', x: 1600, y: 350, width: 100, height: 25, type: 'grass' },
+    ],
+    enemies: [
+      { id: 'enemy-1', x: 450, y: 480, width: 40, height: 40, type: 'slime', speed: 1.5, direction: 1, patrolStart: 400, patrolEnd: 580 },
+      { id: 'enemy-2', x: 750, y: 480, width: 40, height: 40, type: 'slime', speed: 2, direction: -1, patrolStart: 700, patrolEnd: 980 },
+      { id: 'enemy-3', x: 400, y: 280, width: 35, height: 35, type: 'bat', speed: 2, direction: 1, patrolStart: 300, patrolEnd: 550 },
+      { id: 'enemy-4', x: 1200, y: 480, width: 40, height: 40, type: 'slime', speed: 1.5, direction: 1, patrolStart: 1150, patrolEnd: 1330 },
+    ],
+    collectibles: [
+      { id: 'coin-1', x: 200, y: 380, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-2', x: 350, y: 300, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-3', x: 550, y: 360, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-4', x: 700, y: 280, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-5', x: 850, y: 340, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-6', x: 1000, y: 240, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-7', x: 1150, y: 340, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-8', x: 1300, y: 260, type: 'coin', collected: false, value: 10 },
+      { id: 'star-1', x: 1000, y: 180, type: 'star', collected: false, value: 50 },
+      { id: 'heart-1', x: 450, y: 480, type: 'heart', collected: false, value: 1 },
+      { id: 'heart-2', x: 1200, y: 480, type: 'heart', collected: false, value: 1 },
+    ],
+    portal: { id: 'portal-2', x: 1680, y: 440, targetLevel: 3, active: true },
+  },
+  
+  // Level 3 - Sky Kingdom (Hard difficulty)
+  {
+    id: 3,
+    name: 'Sky Kingdom',
+    theme: 'sky',
+    background: 'gradient-night',
+    width: 2000,
+    height: 600,
+    playerStart: { x: 80, y: 450 },
+    platforms: [
+      // Floating islands - no continuous ground
+      { id: 'island-1', x: 0, y: 520, width: 200, height: 80, type: 'stone' },
+      { id: 'island-2', x: 300, y: 480, width: 150, height: 60, type: 'ice' },
+      { id: 'island-3', x: 550, y: 420, width: 180, height: 50, type: 'stone' },
+      { id: 'island-4', x: 800, y: 500, width: 120, height: 50, type: 'ice' },
+      { id: 'island-5', x: 1000, y: 400, width: 150, height: 50, type: 'stone' },
+      { id: 'island-6', x: 1250, y: 480, width: 130, height: 50, type: 'ice' },
+      { id: 'island-7', x: 1500, y: 380, width: 160, height: 50, type: 'stone' },
+      { id: 'island-8', x: 1750, y: 500, width: 250, height: 80, type: 'stone' },
+      // High platforms
+      { id: 'plat-1', x: 150, y: 380, width: 80, height: 25, type: 'ice' },
+      { id: 'plat-2', x: 350, y: 320, width: 100, height: 25, type: 'stone' },
+      { id: 'plat-3', x: 600, y: 280, width: 80, height: 25, type: 'ice' },
+      { id: 'plat-4', x: 850, y: 340, width: 100, height: 25, type: 'stone' },
+      { id: 'plat-5', x: 1050, y: 260, width: 80, height: 25, type: 'ice' },
+      { id: 'plat-6', x: 1300, y: 320, width: 100, height: 25, type: 'stone' },
+      { id: 'plat-7', x: 1550, y: 240, width: 80, height: 25, type: 'ice' },
+      { id: 'plat-8', x: 1700, y: 300, width: 100, height: 25, type: 'stone' },
+    ],
+    enemies: [
+      { id: 'enemy-1', x: 350, y: 440, width: 40, height: 40, type: 'slime', speed: 2, direction: 1, patrolStart: 300, patrolEnd: 430 },
+      { id: 'enemy-2', x: 600, y: 380, width: 40, height: 40, type: 'slime', speed: 2, direction: -1, patrolStart: 550, patrolEnd: 710 },
+      { id: 'enemy-3', x: 500, y: 250, width: 35, height: 35, type: 'bat', speed: 2.5, direction: 1, patrolStart: 400, patrolEnd: 700 },
+      { id: 'enemy-4', x: 1100, y: 180, width: 35, height: 35, type: 'bat', speed: 3, direction: -1, patrolStart: 1000, patrolEnd: 1300 },
+      { id: 'enemy-5', x: 1300, y: 440, width: 40, height: 40, type: 'slime', speed: 2, direction: 1, patrolStart: 1250, patrolEnd: 1360 },
+      { id: 'enemy-6', x: 1550, y: 340, width: 40, height: 40, type: 'slime', speed: 2.5, direction: -1, patrolStart: 1500, patrolEnd: 1640 },
+    ],
+    collectibles: [
+      { id: 'coin-1', x: 190, y: 340, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-2', x: 400, y: 280, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-3', x: 640, y: 240, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-4', x: 900, y: 300, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-5', x: 1090, y: 220, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-6', x: 1350, y: 280, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-7', x: 1590, y: 200, type: 'coin', collected: false, value: 10 },
+      { id: 'coin-8', x: 1750, y: 260, type: 'coin', collected: false, value: 10 },
+      { id: 'star-1', x: 1100, y: 140, type: 'star', collected: false, value: 50 },
+      { id: 'star-2', x: 1600, y: 120, type: 'star', collected: false, value: 50 },
+      { id: 'heart-1', x: 600, y: 380, type: 'heart', collected: false, value: 1 },
+      { id: 'heart-2', x: 1050, y: 360, type: 'heart', collected: false, value: 1 },
+      { id: 'heart-3', x: 1550, y: 340, type: 'heart', collected: false, value: 1 },
+    ],
+    portal: { id: 'portal-3', x: 1880, y: 420, targetLevel: 1, active: true },
+  },
+];
+
+export const getLevel = (id: number): Level | undefined => {
+  return levels.find(level => level.id === id);
+};
