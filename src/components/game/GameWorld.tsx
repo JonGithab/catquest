@@ -33,6 +33,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(220 40% 15%) 0%, hsl(210 45% 12%) 50%, hsl(200 50% 8%) 100%)';
       case 'rooftop':
         return 'linear-gradient(180deg, hsl(25 60% 65%) 0%, hsl(35 70% 55%) 30%, hsl(220 50% 40%) 100%)';
+      case 'metro':
+        return 'linear-gradient(180deg, hsl(220 15% 18%) 0%, hsl(220 20% 12%) 50%, hsl(220 25% 8%) 100%)';
       default:
         return 'var(--gradient-sky)';
     }
@@ -960,6 +962,225 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                 background: 'linear-gradient(90deg, hsl(32 72% 68%), hsl(42 82% 74%))',
               }}
             />
+          </>
+        )}
+
+        {level.theme === 'metro' && (
+          <>
+            {/* Tunnel arch overlay */}
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `
+                  radial-gradient(ellipse 120% 80% at 50% 0%, transparent 60%, hsl(220 20% 8%) 100%)
+                `,
+              }}
+            />
+            {/* Tunnel segments */}
+            {[0, 400, 800, 1200, 1600, 2000, 2400, 2800].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 0,
+                  width: 400,
+                  height: '100%',
+                }}
+              >
+                {/* Tunnel arch lines */}
+                <div 
+                  className="absolute top-0 left-0 right-0 h-full border-l-4 border-r-4 opacity-20"
+                  style={{ borderColor: 'hsl(220 15% 25%)' }}
+                />
+                {/* Support beams */}
+                <div 
+                  className="absolute top-0 left-1/2 w-2 h-full -translate-x-1/2 opacity-10"
+                  style={{ background: 'hsl(220 10% 30%)' }}
+                />
+              </div>
+            ))}
+            {/* Track rails */}
+            <div 
+              className="absolute bottom-20 left-0 right-0 h-2"
+              style={{
+                background: 'linear-gradient(90deg, hsl(220 15% 25%) 0%, hsl(220 15% 25%) 48%, hsl(220 10% 15%) 48%, hsl(220 10% 15%) 52%, hsl(220 15% 25%) 52%, hsl(220 15% 25%) 100%)',
+                transform: `translateX(${-cameraOffset}px)`,
+              }}
+            />
+            {/* Rail ties */}
+            {Array.from({ length: 80 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute bottom-16 w-12 h-3"
+                style={{
+                  left: i * 40 - cameraOffset,
+                  background: 'hsl(25 30% 25%)',
+                  borderRadius: '2px',
+                }}
+              />
+            ))}
+            {/* Platform edge warning strips */}
+            {[0, 450, 850, 1300, 1700, 2150, 2550, 3000].map((x, i) => (
+              <div
+                key={i}
+                className="absolute bottom-20 h-2"
+                style={{
+                  left: x - cameraOffset,
+                  width: i === 7 ? 200 : (i % 2 === 0 ? 400 : 350),
+                  background: 'repeating-linear-gradient(90deg, hsl(45 90% 55%) 0px, hsl(45 90% 55%) 20px, hsl(220 20% 15%) 20px, hsl(220 20% 15%) 40px)',
+                }}
+              />
+            ))}
+            {/* Station signs */}
+            {[200, 1000, 1900, 2750].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 60,
+                }}
+              >
+                <div 
+                  className="px-4 py-2 rounded"
+                  style={{
+                    background: 'hsl(220 20% 20%)',
+                    border: '2px solid hsl(220 15% 35%)',
+                  }}
+                >
+                  <div 
+                    className="text-sm font-bold tracking-wide"
+                    style={{ color: 'hsl(0 0% 90%)' }}
+                  >
+                    {['METRO CENTER', 'GALLERY PL', 'UNION STATION', 'CHINATOWN'][i]}
+                  </div>
+                </div>
+                {/* Metro line indicators */}
+                <div className="flex gap-1 mt-1 justify-center">
+                  <div className="w-4 h-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-bold">R</div>
+                  <div className="w-4 h-4 rounded-full bg-orange-500 text-white text-xs flex items-center justify-center font-bold">O</div>
+                  <div className="w-4 h-4 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center font-bold">B</div>
+                </div>
+              </div>
+            ))}
+            {/* Pillars */}
+            {[350, 750, 1200, 1650, 2100, 2500, 2950].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 150,
+                }}
+              >
+                <div 
+                  className="w-8 h-80"
+                  style={{
+                    background: 'linear-gradient(90deg, hsl(220 15% 28%) 0%, hsl(220 15% 22%) 50%, hsl(220 15% 28%) 100%)',
+                    borderRadius: '4px',
+                  }}
+                />
+              </div>
+            ))}
+            {/* Ceiling lights */}
+            {[100, 300, 500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500, 2700, 2900].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 30,
+                }}
+              >
+                <div 
+                  className="w-20 h-3 rounded-b"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(45 70% 75%) 0%, hsl(45 60% 65%) 100%)',
+                    boxShadow: '0 5px 20px hsl(45 60% 60% / 0.3), 0 10px 40px hsl(45 50% 50% / 0.15)',
+                  }}
+                />
+              </div>
+            ))}
+            {/* Train in tunnel (background decoration) */}
+            <div 
+              className="absolute"
+              style={{
+                left: 1400 - cameraOffset * 0.3,
+                top: 280,
+                opacity: 0.3,
+              }}
+            >
+              {/* Train cars */}
+              {[0, 1, 2].map((car) => (
+                <div
+                  key={car}
+                  className="inline-block mx-0.5"
+                  style={{
+                    width: 60,
+                    height: 35,
+                    background: 'linear-gradient(180deg, hsl(220 20% 40%) 0%, hsl(220 25% 30%) 100%)',
+                    borderRadius: '4px',
+                  }}
+                >
+                  {/* Windows */}
+                  <div className="flex gap-1 px-1 pt-1">
+                    {[0, 1, 2, 3].map((w) => (
+                      <div
+                        key={w}
+                        className="w-3 h-4 rounded-sm"
+                        style={{ background: 'hsl(45 50% 70%)' }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Ventilation grates on ceiling */}
+            {[250, 650, 1050, 1450, 1850, 2250, 2650, 3050].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 10,
+                }}
+              >
+                <div 
+                  className="w-16 h-4 flex gap-0.5"
+                >
+                  {Array.from({ length: 8 }).map((_, j) => (
+                    <div
+                      key={j}
+                      className="flex-1 h-full"
+                      style={{ background: 'hsl(220 15% 20%)' }}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+            {/* Emergency exit signs */}
+            {[600, 1500, 2400].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 100,
+                }}
+              >
+                <div 
+                  className="px-2 py-1 text-xs font-bold rounded"
+                  style={{
+                    background: 'hsl(120 70% 35%)',
+                    color: 'white',
+                    boxShadow: '0 0 10px hsl(120 70% 40% / 0.5)',
+                  }}
+                >
+                  EXIT →
+                </div>
+              </div>
+            ))}
           </>
         )}
 
