@@ -28,7 +28,7 @@ export interface Platform {
   y: number;
   width: number;
   height: number;
-  type: 'grass' | 'stone' | 'ice' | 'moving';
+  type: 'grass' | 'stone' | 'ice' | 'moving' | 'brick';
   movingDirection?: 'horizontal' | 'vertical';
   movingRange?: number;
 }
@@ -66,7 +66,7 @@ export interface Portal {
 export interface Level {
   id: number;
   name: string;
-  theme: 'meadow' | 'forest' | 'sky';
+  theme: 'meadow' | 'forest' | 'sky' | 'building';
   background: string;
   platforms: Platform[];
   enemies: Enemy[];

@@ -23,6 +23,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(30 80% 65%) 0%, hsl(330 60% 55%) 50%, hsl(270 50% 35%) 100%)';
       case 'sky':
         return 'linear-gradient(180deg, hsl(250 50% 25%) 0%, hsl(270 45% 20%) 50%, hsl(280 40% 15%) 100%)';
+      case 'building':
+        return 'linear-gradient(180deg, hsl(25 30% 25%) 0%, hsl(20 25% 20%) 50%, hsl(15 20% 15%) 100%)';
       default:
         return 'var(--gradient-sky)';
     }
@@ -134,6 +136,98 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
               className="absolute top-48 w-24 h-8 bg-purple-400/15 rounded-full blur-sm"
               style={{ left: 800 - cameraOffset * 0.2 }}
             />
+          </>
+        )}
+
+        {level.theme === 'building' && (
+          <>
+            {/* Brick wall background pattern */}
+            <div 
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: `
+                  repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 20px,
+                    hsl(15 30% 30%) 20px,
+                    hsl(15 30% 30%) 22px
+                  ),
+                  repeating-linear-gradient(
+                    90deg,
+                    hsl(15 40% 25%),
+                    hsl(15 40% 25%) 40px,
+                    hsl(15 30% 30%) 40px,
+                    hsl(15 30% 30%) 42px
+                  )
+                `,
+                transform: `translateX(${-cameraOffset * 0.1}px)`,
+              }}
+            />
+            {/* Doors in corridor */}
+            {[200, 450, 750, 1050, 1350, 1650, 1950].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 420,
+                  width: 50,
+                  height: 100,
+                }}
+              >
+                {/* Door frame */}
+                <div 
+                  className="absolute inset-0 rounded-t-lg"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(30 40% 35%) 0%, hsl(25 35% 25%) 100%)',
+                    border: '3px solid hsl(30 30% 20%)',
+                    boxShadow: 'inset -2px -2px 4px rgba(0,0,0,0.3), inset 2px 2px 4px rgba(255,255,255,0.1)',
+                  }}
+                >
+                  {/* Door handle */}
+                  <div 
+                    className="absolute right-2 top-1/2 w-2 h-4 rounded-full"
+                    style={{ background: 'hsl(45 60% 50%)' }}
+                  />
+                  {/* Door panels */}
+                  <div 
+                    className="absolute top-3 left-2 right-2 h-8 rounded"
+                    style={{ 
+                      background: 'hsl(30 35% 30%)',
+                      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.3)',
+                    }}
+                  />
+                  <div 
+                    className="absolute bottom-8 left-2 right-2 h-10 rounded"
+                    style={{ 
+                      background: 'hsl(30 35% 30%)',
+                      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.3)',
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+            {/* Ceiling lights */}
+            {[150, 400, 700, 1000, 1300, 1600, 1900].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 80,
+                }}
+              >
+                <div className="w-1 h-8 bg-gray-600 mx-auto" />
+                <div 
+                  className="w-10 h-6 rounded-b-lg"
+                  style={{
+                    background: 'radial-gradient(ellipse at center, hsl(45 90% 70%) 0%, hsl(45 80% 50%) 100%)',
+                    boxShadow: '0 0 20px hsl(45 80% 60% / 0.4), 0 10px 40px hsl(45 80% 50% / 0.2)',
+                  }}
+                />
+              </div>
+            ))}
           </>
         )}
 
