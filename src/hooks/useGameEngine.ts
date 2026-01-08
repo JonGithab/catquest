@@ -24,7 +24,7 @@ const initialPlayerState: PlayerState = {
 
 const initialGameState: GameState = {
   currentLevel: 1,
-  selectedCharacter: 'luna',
+  selectedCharacter: 'hywon',
   player: initialPlayerState,
   isPlaying: false,
   isPaused: false,
@@ -218,11 +218,11 @@ export const useGameEngine = () => {
       if (jump && isGrounded) {
         newVy = -character.jumpPower;
         isGrounded = false;
-        doubleJumpAvailable.current = prev.selectedCharacter === 'luna';
+        doubleJumpAvailable.current = prev.selectedCharacter === 'hywon';
         keysPressed.current.delete('ArrowUp');
         keysPressed.current.delete('w');
         keysPressed.current.delete(' ');
-      } else if (jump && !isGrounded && doubleJumpAvailable.current && prev.selectedCharacter === 'luna') {
+      } else if (jump && !isGrounded && doubleJumpAvailable.current && prev.selectedCharacter === 'hywon') {
         newVy = -character.jumpPower * 0.85;
         doubleJumpAvailable.current = false;
         keysPressed.current.delete('ArrowUp');
@@ -230,8 +230,8 @@ export const useGameEngine = () => {
         keysPressed.current.delete(' ');
       }
 
-      // Dash ability for Blaze
-      if (dash && prev.selectedCharacter === 'blaze' && !dashCooldown.current) {
+      // Dash ability for Junnior
+      if (dash && prev.selectedCharacter === 'junnior' && !dashCooldown.current) {
         newVx = facingRight ? 15 : -15;
         dashCooldown.current = true;
         setTimeout(() => { dashCooldown.current = false; }, 800);
@@ -263,7 +263,7 @@ export const useGameEngine = () => {
           newY = platform.y - playerHeight;
           newVy = 0;
           groundedThisFrame = true;
-          doubleJumpAvailable.current = prev.selectedCharacter === 'luna';
+          doubleJumpAvailable.current = prev.selectedCharacter === 'hywon';
         }
 
         // Check horizontal collision

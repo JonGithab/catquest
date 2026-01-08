@@ -1,18 +1,18 @@
 import { Character } from '@/types/game';
 
 export const characters: Record<string, Character> = {
-  luna: {
-    id: 'luna',
-    name: 'Luna',
+  hywon: {
+    id: 'hywon',
+    name: 'Hywon',
     description: 'A nimble explorer with the power of double jump. Perfect for reaching high places!',
     color: 'primary',
     ability: 'Double Jump',
     speed: 5,
     jumpPower: 12,
   },
-  blaze: {
-    id: 'blaze',
-    name: 'Blaze',
+  junnior: {
+    id: 'junnior',
+    name: 'Junnior',
     description: 'A fiery speedster who can dash through enemies. Great for aggressive playstyles!',
     color: 'accent',
     ability: 'Fire Dash',
@@ -22,5 +22,5 @@ export const characters: Record<string, Character> = {
 };
 
 export const getCharacter = (id: string): Character => {
-  return characters[id] || characters.luna;
+  return characters[id] || characters.hywon;
 };
