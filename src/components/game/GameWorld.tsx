@@ -30,7 +30,7 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
 
   return (
     <div 
-      className="relative w-[800px] h-[600px] overflow-hidden rounded-2xl"
+      className="relative w-full max-w-[800px] aspect-[4/3] overflow-hidden rounded-2xl"
       style={{
         background: getBackground(),
         boxShadow: '0 0 0 4px hsl(var(--foreground) / 0.1), 0 8px 32px rgba(0,0,0,0.3)',
