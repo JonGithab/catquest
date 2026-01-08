@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useGameEngine } from '@/hooks/useGameEngine';
+import { useMusicPlayer } from '@/hooks/useMusicPlayer';
 import { MainMenu } from './MainMenu';
 import { GameWorld } from './GameWorld';
 import { GameHUD } from './GameHUD';
@@ -23,6 +25,17 @@ export const Game = () => {
     selectLevel,
     triggerMobileInput,
   } = useGameEngine();
+
+  const { playMusic, stopMusic } = useMusicPlayer();
+
+  // Handle music based on game state and level theme
+  useEffect(() => {
+    if (gameState.isPlaying && level && !gameState.isPaused && !gameState.isGameOver && !gameState.isLevelComplete) {
+      playMusic(level.theme as 'meadow' | 'forest' | 'sky');
+    } else if (gameState.isPaused || gameState.isGameOver || !gameState.isPlaying) {
+      stopMusic();
+    }
+  }, [gameState.isPlaying, gameState.isPaused, gameState.isGameOver, gameState.isLevelComplete, level?.theme, playMusic, stopMusic]);
 
   const handleMainMenu = () => {
     window.location.reload(); // Simple way to reset to main menu
