@@ -336,10 +336,10 @@ export const levels: Level[] = [
     portal: { id: 'portal-6', x: 2500, y: 440, targetLevel: 7, active: true },
   },
 
-  // Level 7 - C2 Building (World cable map scenery)
+  // Level 7 - GWCC Parks (World cable map scenery)
   {
     id: 7,
-    name: 'C2 Building',
+    name: 'GWCC Parks',
     theme: 'c2',
     background: 'gradient-c2',
     width: 2800,
