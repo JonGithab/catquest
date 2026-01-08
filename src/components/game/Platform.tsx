@@ -24,6 +24,11 @@ export const Platform = ({ platform, cameraOffset }: PlatformProps) => {
           borderTop: '3px solid hsl(195 85% 85%)',
           opacity: 0.9,
         };
+      case 'brick':
+        return {
+          background: 'linear-gradient(180deg, hsl(15 60% 40%) 0%, hsl(15 55% 30%) 100%)',
+          borderTop: '3px solid hsl(15 65% 50%)',
+        };
       default:
         return {
           background: 'hsl(var(--grass))',
@@ -61,6 +66,23 @@ export const Platform = ({ platform, cameraOffset }: PlatformProps) => {
         <div className="absolute inset-0 overflow-hidden rounded-t-md">
           <div className="absolute top-0 left-1/4 w-8 h-full bg-white/30 -skew-x-12" />
           <div className="absolute top-0 right-1/4 w-4 h-full bg-white/20 -skew-x-12" />
+        </div>
+      )}
+
+      {/* Brick pattern */}
+      {platform.type === 'brick' && (
+        <div className="absolute inset-0 overflow-hidden rounded-t-md opacity-40">
+          {Array.from({ length: Math.ceil(platform.height / 12) }).map((_, rowIndex) => (
+            <div key={rowIndex} className="flex" style={{ marginLeft: rowIndex % 2 === 0 ? 0 : -15 }}>
+              {Array.from({ length: Math.ceil(platform.width / 30) + 1 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-[28px] h-[10px] border border-amber-900/50 m-[1px]"
+                  style={{ background: 'hsl(15 50% 35%)' }}
+                />
+              ))}
+            </div>
+          ))}
         </div>
       )}
     </div>
