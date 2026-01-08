@@ -35,6 +35,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(25 60% 65%) 0%, hsl(35 70% 55%) 30%, hsl(220 50% 40%) 100%)';
       case 'metro':
         return 'linear-gradient(180deg, hsl(220 15% 18%) 0%, hsl(220 20% 12%) 50%, hsl(220 25% 8%) 100%)';
+      case 'catwalk':
+        return 'linear-gradient(180deg, hsl(280 30% 12%) 0%, hsl(300 25% 8%) 50%, hsl(320 20% 5%) 100%)';
       default:
         return 'var(--gradient-sky)';
     }
@@ -1180,6 +1182,168 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                   EXIT →
                 </div>
               </div>
+            ))}
+          </>
+        )}
+
+        {level.theme === 'catwalk' && (
+          <>
+            {/* Dramatic dark background with subtle purple hue */}
+            <div 
+              className="absolute inset-0 opacity-20"
+              style={{
+                background: 'radial-gradient(ellipse at 50% 100%, hsl(280 40% 20%) 0%, transparent 70%)',
+              }}
+            />
+            {/* Spotlights from above */}
+            {[150, 450, 750, 1050, 1350, 1650, 1950, 2250, 2550, 2850, 3150].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 0,
+                }}
+              >
+                {/* Spotlight beam */}
+                <div 
+                  className="w-40 h-full opacity-15"
+                  style={{
+                    background: `linear-gradient(180deg, hsl(${[320, 280, 45, 180, 320, 280, 45, 180, 320, 280, 45][i]} 70% 70%) 0%, transparent 80%)`,
+                    clipPath: 'polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%)',
+                  }}
+                />
+                {/* Light source */}
+                <div 
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-4 rounded-b-full"
+                  style={{
+                    background: `hsl(${[320, 280, 45, 180, 320, 280, 45, 180, 320, 280, 45][i]} 80% 60%)`,
+                    boxShadow: `0 0 20px hsl(${[320, 280, 45, 180, 320, 280, 45, 180, 320, 280, 45][i]} 80% 60%)`,
+                  }}
+                />
+              </div>
+            ))}
+            {/* Runway strip lights */}
+            {Array.from({ length: 85 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 rounded-full animate-pulse"
+                style={{
+                  left: i * 40 + 20 - cameraOffset,
+                  top: 510,
+                  background: i % 2 === 0 ? 'hsl(320 80% 60%)' : 'hsl(45 90% 70%)',
+                  boxShadow: `0 0 8px ${i % 2 === 0 ? 'hsl(320 80% 60%)' : 'hsl(45 90% 70%)'}`,
+                  animationDelay: `${i * 0.05}s`,
+                }}
+              />
+            ))}
+            {/* Camera flash effects */}
+            {[300, 700, 1100, 1500, 1900, 2300, 2700, 3100].map((x, i) => (
+              <div
+                key={i}
+                className="absolute animate-pulse"
+                style={{
+                  left: x - cameraOffset,
+                  top: 350 + (i % 2) * 50,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: '2s',
+                }}
+              >
+                <div 
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    background: 'white',
+                    boxShadow: '0 0 15px white, 0 0 30px white',
+                  }}
+                />
+              </div>
+            ))}
+            {/* Fashion show audience silhouettes */}
+            {[50, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  bottom: 85,
+                }}
+              >
+                {/* Head */}
+                <div 
+                  className="w-4 h-4 rounded-full mx-auto"
+                  style={{ background: 'hsl(0 0% 15%)' }}
+                />
+                {/* Body */}
+                <div 
+                  className="w-6 h-8 rounded-t-lg -mt-1"
+                  style={{ background: 'hsl(0 0% 12%)' }}
+                />
+              </div>
+            ))}
+            {/* CATWALK neon sign */}
+            <div 
+              className="absolute top-10"
+              style={{ left: 400 - cameraOffset * 0.1 }}
+            >
+              <div 
+                className="px-6 py-3 text-3xl font-bold tracking-widest"
+                style={{
+                  color: 'hsl(320 90% 65%)',
+                  textShadow: '0 0 10px hsl(320 90% 65%), 0 0 20px hsl(320 80% 55%), 0 0 40px hsl(320 70% 50%)',
+                  fontFamily: 'sans-serif',
+                }}
+              >
+                CATWALK
+              </div>
+            </div>
+            {/* Second sign */}
+            <div 
+              className="absolute top-16"
+              style={{ left: 1800 - cameraOffset * 0.1 }}
+            >
+              <div 
+                className="px-4 py-2 text-xl font-bold tracking-wide"
+                style={{
+                  color: 'hsl(45 90% 65%)',
+                  textShadow: '0 0 10px hsl(45 90% 65%), 0 0 20px hsl(45 80% 55%)',
+                  fontFamily: 'sans-serif',
+                }}
+              >
+                ★ FASHION WEEK ★
+              </div>
+            </div>
+            {/* Hanging fabric decorations */}
+            {[250, 750, 1250, 1750, 2250, 2750, 3250].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 20,
+                }}
+              >
+                <div 
+                  className="w-1 h-16"
+                  style={{ 
+                    background: `linear-gradient(180deg, hsl(${[320, 280, 45, 180, 320, 280, 45][i]} 60% 50%) 0%, transparent 100%)`,
+                  }}
+                />
+              </div>
+            ))}
+            {/* Glitter particles */}
+            {Array.from({ length: 40 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 rounded-full animate-pulse"
+                style={{
+                  left: (i * 85 + 30) - cameraOffset * 0.4,
+                  top: 50 + (i % 5) * 60,
+                  background: ['hsl(320 80% 70%)', 'hsl(45 90% 75%)', 'hsl(280 70% 70%)', 'white'][i % 4],
+                  boxShadow: `0 0 4px ${['hsl(320 80% 70%)', 'hsl(45 90% 75%)', 'hsl(280 70% 70%)', 'white'][i % 4]}`,
+                  animationDelay: `${i * 0.1}s`,
+                  opacity: 0.6,
+                }}
+              />
             ))}
           </>
         )}
