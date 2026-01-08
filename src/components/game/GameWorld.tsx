@@ -29,6 +29,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(35 40% 85%) 0%, hsl(25 35% 75%) 50%, hsl(20 50% 55%) 100%)';
       case 'donuts':
         return 'linear-gradient(180deg, hsl(330 70% 85%) 0%, hsl(25 80% 75%) 50%, hsl(35 60% 65%) 100%)';
+      case 'c2':
+        return 'linear-gradient(180deg, hsl(220 40% 15%) 0%, hsl(210 45% 12%) 50%, hsl(200 50% 8%) 100%)';
       default:
         return 'var(--gradient-sky)';
     }
@@ -501,6 +503,263 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                 COFFEE ☕
               </div>
             </div>
+          </>
+        )}
+
+        {level.theme === 'c2' && (
+          <>
+            {/* World map background */}
+            <div 
+              className="absolute inset-0 opacity-20"
+              style={{
+                transform: `translateX(${-cameraOffset * 0.05}px)`,
+              }}
+            >
+              {/* Simplified continent shapes */}
+              {/* North America */}
+              <div 
+                className="absolute"
+                style={{
+                  left: 80,
+                  top: 80,
+                  width: 120,
+                  height: 100,
+                  background: 'hsl(150 40% 35%)',
+                  borderRadius: '30% 50% 40% 60%',
+                  opacity: 0.6,
+                }}
+              />
+              {/* South America */}
+              <div 
+                className="absolute"
+                style={{
+                  left: 130,
+                  top: 200,
+                  width: 60,
+                  height: 120,
+                  background: 'hsl(150 40% 35%)',
+                  borderRadius: '50% 50% 60% 40%',
+                  opacity: 0.6,
+                }}
+              />
+              {/* Europe */}
+              <div 
+                className="absolute"
+                style={{
+                  left: 320,
+                  top: 60,
+                  width: 80,
+                  height: 60,
+                  background: 'hsl(150 40% 35%)',
+                  borderRadius: '40% 60% 50% 30%',
+                  opacity: 0.6,
+                }}
+              />
+              {/* Africa */}
+              <div 
+                className="absolute"
+                style={{
+                  left: 310,
+                  top: 140,
+                  width: 80,
+                  height: 120,
+                  background: 'hsl(150 40% 35%)',
+                  borderRadius: '50% 50% 40% 60%',
+                  opacity: 0.6,
+                }}
+              />
+              {/* Asia */}
+              <div 
+                className="absolute"
+                style={{
+                  left: 420,
+                  top: 50,
+                  width: 180,
+                  height: 130,
+                  background: 'hsl(150 40% 35%)',
+                  borderRadius: '30% 60% 50% 40%',
+                  opacity: 0.6,
+                }}
+              />
+              {/* Australia */}
+              <div 
+                className="absolute"
+                style={{
+                  left: 550,
+                  top: 240,
+                  width: 70,
+                  height: 50,
+                  background: 'hsl(150 40% 35%)',
+                  borderRadius: '40% 50% 60% 50%',
+                  opacity: 0.6,
+                }}
+              />
+            </div>
+            {/* Undersea cable lines */}
+            <svg 
+              className="absolute inset-0 w-full h-full opacity-40"
+              style={{ transform: `translateX(${-cameraOffset * 0.1}px)` }}
+            >
+              {/* Trans-Atlantic cable */}
+              <path 
+                d="M 200 120 Q 280 180 350 100" 
+                stroke="hsl(180 80% 50%)" 
+                strokeWidth="2" 
+                fill="none"
+                className="animate-pulse"
+              />
+              {/* Trans-Pacific cable */}
+              <path 
+                d="M 180 140 Q 50 300 600 180" 
+                stroke="hsl(200 70% 55%)" 
+                strokeWidth="2" 
+                fill="none"
+                style={{ animationDelay: '0.5s' }}
+                className="animate-pulse"
+              />
+              {/* Europe to Asia */}
+              <path 
+                d="M 380 80 Q 450 120 520 90" 
+                stroke="hsl(280 60% 55%)" 
+                strokeWidth="2" 
+                fill="none"
+                style={{ animationDelay: '1s' }}
+                className="animate-pulse"
+              />
+              {/* Africa to Asia */}
+              <path 
+                d="M 360 200 Q 420 220 480 150" 
+                stroke="hsl(45 80% 55%)" 
+                strokeWidth="2" 
+                fill="none"
+                style={{ animationDelay: '1.5s' }}
+                className="animate-pulse"
+              />
+              {/* Asia to Australia */}
+              <path 
+                d="M 520 170 Q 540 220 570 250" 
+                stroke="hsl(330 70% 55%)" 
+                strokeWidth="2" 
+                fill="none"
+                style={{ animationDelay: '2s' }}
+                className="animate-pulse"
+              />
+            </svg>
+            {/* Data nodes / connection points */}
+            {[
+              { x: 200, y: 120 }, { x: 350, y: 100 }, { x: 180, y: 140 },
+              { x: 380, y: 80 }, { x: 520, y: 90 }, { x: 360, y: 200 },
+              { x: 480, y: 150 }, { x: 570, y: 250 }, { x: 130, y: 250 },
+            ].map((node, i) => (
+              <div
+                key={i}
+                className="absolute w-3 h-3 rounded-full animate-pulse"
+                style={{
+                  left: node.x - cameraOffset * 0.1,
+                  top: node.y,
+                  background: 'hsl(180 90% 60%)',
+                  boxShadow: '0 0 8px hsl(180 90% 60%), 0 0 16px hsl(180 80% 50%)',
+                  animationDelay: `${i * 0.2}s`,
+                }}
+              />
+            ))}
+            {/* Server racks in foreground */}
+            {[150, 450, 800, 1150, 1500, 1850, 2200, 2550].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 380,
+                }}
+              >
+                {/* Server rack */}
+                <div 
+                  className="w-14 h-28 rounded-t"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(220 20% 25%) 0%, hsl(220 25% 18%) 100%)',
+                    border: '2px solid hsl(220 15% 35%)',
+                  }}
+                >
+                  {/* Server units */}
+                  {[0, 1, 2, 3, 4].map((u) => (
+                    <div
+                      key={u}
+                      className="mx-1 my-1 h-4 rounded-sm flex items-center gap-0.5 px-1"
+                      style={{ background: 'hsl(220 30% 15%)' }}
+                    >
+                      {/* Blinking LEDs */}
+                      <div 
+                        className="w-1 h-1 rounded-full animate-pulse"
+                        style={{ 
+                          background: u % 2 === 0 ? 'hsl(120 80% 50%)' : 'hsl(45 90% 50%)',
+                          animationDelay: `${u * 0.3 + i * 0.1}s`,
+                        }}
+                      />
+                      <div 
+                        className="w-1 h-1 rounded-full animate-pulse"
+                        style={{ 
+                          background: 'hsl(180 70% 50%)',
+                          animationDelay: `${u * 0.2 + i * 0.15}s`,
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            {/* Floating data packets */}
+            {[100, 350, 650, 950, 1250, 1550, 1850, 2150, 2450].map((x, i) => (
+              <div
+                key={i}
+                className="absolute animate-bounce"
+                style={{
+                  left: x - cameraOffset * 0.6,
+                  top: 60 + (i % 3) * 40,
+                  animationDelay: `${i * 0.4}s`,
+                  animationDuration: '3s',
+                }}
+              >
+                <div 
+                  className="w-6 h-4 rounded-sm flex items-center justify-center text-xs font-mono"
+                  style={{
+                    background: `hsl(${180 + i * 20} 70% 45%)`,
+                    color: 'white',
+                    boxShadow: `0 0 10px hsl(${180 + i * 20} 70% 45% / 0.5)`,
+                  }}
+                >
+                  {['01', '10', '11', '00'][i % 4]}
+                </div>
+              </div>
+            ))}
+            {/* C2 Building sign */}
+            <div 
+              className="absolute top-6"
+              style={{ left: 300 - cameraOffset * 0.15 }}
+            >
+              <div 
+                className="px-4 py-2 text-xl font-bold tracking-widest"
+                style={{
+                  color: 'hsl(180 90% 65%)',
+                  textShadow: '0 0 10px hsl(180 90% 65%), 0 0 20px hsl(180 80% 50%), 0 0 30px hsl(180 70% 45%)',
+                  fontFamily: 'monospace',
+                }}
+              >
+                C2 NETWORK HUB
+              </div>
+            </div>
+            {/* Grid overlay */}
+            <div 
+              className="absolute inset-0 opacity-5"
+              style={{
+                backgroundImage: `
+                  linear-gradient(hsl(180 50% 50%) 1px, transparent 1px),
+                  linear-gradient(90deg, hsl(180 50% 50%) 1px, transparent 1px)
+                `,
+                backgroundSize: '40px 40px',
+                transform: `translateX(${-cameraOffset * 0.02}px)`,
+              }}
+            />
           </>
         )}
 
