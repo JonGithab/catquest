@@ -18,7 +18,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
   const characterList = Object.values(characters);
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 gradient-sky">
+    <div className="min-h-screen flex items-center justify-center p-2 sm:p-4 gradient-sky">
       {/* Background decorations */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Clouds */}
@@ -67,7 +67,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="game-card max-w-lg w-full relative z-10"
+        className="game-card max-w-lg w-full relative z-10 mx-2"
       >
         {!showLevelSelect ? (
           <>
@@ -76,28 +76,28 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", damping: 10 }}
-              className="text-center mb-8"
+              className="text-center mb-6 sm:mb-8"
             >
-              <h1 className="font-display text-5xl font-bold text-shadow-game mb-2">
+              <h1 className="font-display text-4xl sm:text-5xl font-bold text-shadow-game mb-2">
                 <span className="text-primary">Cat</span>
                 <span className="text-secondary">Quest</span>
               </h1>
-              <p className="text-muted-foreground">A Colorful Laborer Adventure</p>
+              <p className="text-muted-foreground text-sm sm:text-base">A Colorful Laborer Adventure</p>
             </motion.div>
 
             {/* Character Selection */}
-            <div className="mb-6">
-              <h3 className="font-display text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Users className="w-5 h-5" />
+            <div className="mb-4 sm:mb-6">
+              <h3 className="font-display text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3 flex items-center gap-2">
+                <Users className="w-4 h-4 sm:w-5 sm:h-5" />
                 Choose Your Hero
               </h3>
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {characterList.map((char) => (
                   <motion.button
                     key={char.id}
                     onClick={() => setSelectedCharacter(char.id as CharacterType)}
-                    className={`p-4 rounded-xl border-3 transition-all ${
+                    className={`p-3 sm:p-4 rounded-xl border-2 sm:border-3 transition-all ${
                       selectedCharacter === char.id
                         ? 'border-primary bg-primary/10 shadow-lg'
                         : 'border-border bg-card hover:border-primary/50'
@@ -106,63 +106,63 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                     whileTap={{ scale: 0.98 }}
                   >
                     {/* Character preview */}
-                    <div className={`w-12 h-14 mx-auto mb-2 rounded-t-full rounded-b-lg ${
+                    <div className={`w-10 h-12 sm:w-12 sm:h-14 mx-auto mb-2 rounded-t-full rounded-b-lg ${
                       char.id === 'hywon' ? 'bg-primary' : 'bg-accent'
                     } relative`}>
                       {/* Eyes */}
-                      <div className="absolute top-2 left-0 right-0 flex justify-center gap-1.5">
-                        <div className="w-2 h-2.5 bg-card rounded-full" />
-                        <div className="w-2 h-2.5 bg-card rounded-full" />
+                      <div className="absolute top-2 left-0 right-0 flex justify-center gap-1">
+                        <div className="w-1.5 h-2 sm:w-2 sm:h-2.5 bg-card rounded-full" />
+                        <div className="w-1.5 h-2 sm:w-2 sm:h-2.5 bg-card rounded-full" />
                       </div>
                       {/* Ability indicator */}
                       {char.id === 'hywon' ? (
-                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-2 bg-secondary rounded-full" />
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-1.5 sm:w-4 sm:h-2 bg-secondary rounded-full" />
                       ) : (
                         <motion.div 
-                          className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-4 bg-orange-500 rounded-t-full"
+                          className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-3 sm:w-3 sm:h-4 bg-orange-500 rounded-t-full"
                           animate={{ y: [0, -2, 0] }}
                           transition={{ duration: 0.4, repeat: Infinity }}
                         />
                       )}
                     </div>
                     
-                    <h4 className="font-display font-bold text-foreground">{char.name}</h4>
+                    <h4 className="font-display font-bold text-foreground text-sm sm:text-base">{char.name}</h4>
                     <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground mt-1">
                       {char.id === 'hywon' ? (
                         <Sparkles className="w-3 h-3" />
                       ) : (
                         <Zap className="w-3 h-3" />
                       )}
-                      {char.ability}
+                      <span className="hidden sm:inline">{char.ability}</span>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{char.description}</p>
+                    <p className="text-xs text-muted-foreground mt-1 sm:mt-2 line-clamp-2 hidden sm:block">{char.description}</p>
                   </motion.button>
                 ))}
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2 sm:gap-3">
               <Button
                 onClick={() => onStartGame(selectedCharacter)}
-                className="game-button bg-primary text-primary-foreground hover:bg-primary/90 w-full text-xl py-6"
+                className="game-button bg-primary text-primary-foreground hover:bg-primary/90 w-full text-lg sm:text-xl py-4 sm:py-6"
               >
-                <Play className="w-6 h-6 mr-2" />
+                <Play className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                 Start Adventure
               </Button>
               
               <Button
                 onClick={() => setShowLevelSelect(true)}
                 variant="secondary"
-                className="game-button bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full"
+                className="game-button bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full py-3 sm:py-4"
               >
-                <Map className="w-5 h-5 mr-2" />
+                <Map className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Select Level
               </Button>
             </div>
 
-            {/* Controls hint */}
-            <div className="mt-6 p-4 bg-muted/50 rounded-xl">
+            {/* Controls hint - desktop only */}
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-muted/50 rounded-xl hidden sm:block">
               <h4 className="font-display font-semibold text-sm text-foreground mb-2">Controls</h4>
               <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                 <div>← → or A/D: Move</div>
@@ -170,6 +170,13 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                 <div>Shift: {selectedCharacter === 'hywon' ? 'Double Jump (in air)' : 'Fire Dash'}</div>
                 <div>ESC: Pause</div>
               </div>
+            </div>
+            
+            {/* Mobile controls hint */}
+            <div className="mt-4 p-3 bg-muted/50 rounded-xl sm:hidden">
+              <p className="text-xs text-muted-foreground text-center">
+                Use on-screen controls to play
+              </p>
             </div>
           </>
         ) : (

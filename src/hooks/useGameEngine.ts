@@ -41,6 +41,12 @@ export const useGameEngine = () => {
   const [cameraOffset, setCameraOffset] = useState(0);
   
   const keysPressed = useRef<Set<string>>(new Set());
+  const mobileInputs = useRef<{ left: boolean; right: boolean; jump: boolean; dash: boolean }>({
+    left: false,
+    right: false,
+    jump: false,
+    dash: false,
+  });
   const gameLoopRef = useRef<number>();
   const lastTimeRef = useRef<number>(0);
   const doubleJumpAvailable = useRef(true);
@@ -120,6 +126,17 @@ export const useGameEngine = () => {
     }
   }, [gameState.currentLevel, initializeLevel]);
 
+  // Mobile input trigger
+  const triggerMobileInput = useCallback((action: 'left' | 'right' | 'jump' | 'dash', pressed: boolean) => {
+    mobileInputs.current[action] = pressed;
+    // Auto-release jump and dash after triggering
+    if ((action === 'jump' || action === 'dash') && pressed) {
+      setTimeout(() => {
+        mobileInputs.current[action] = false;
+      }, 100);
+    }
+  }, []);
+
   // Select level from menu
   const selectLevel = useCallback((levelId: number) => {
     initializeLevel(levelId);
@@ -197,11 +214,11 @@ export const useGameEngine = () => {
       let newVx = velocity.vx;
       let newVy = velocity.vy;
 
-      // Input handling
-      const moveLeft = keysPressed.current.has('ArrowLeft') || keysPressed.current.has('a');
-      const moveRight = keysPressed.current.has('ArrowRight') || keysPressed.current.has('d');
-      const jump = keysPressed.current.has('ArrowUp') || keysPressed.current.has('w') || keysPressed.current.has(' ');
-      const dash = keysPressed.current.has('Shift');
+      // Input handling - keyboard and mobile
+      const moveLeft = keysPressed.current.has('ArrowLeft') || keysPressed.current.has('a') || mobileInputs.current.left;
+      const moveRight = keysPressed.current.has('ArrowRight') || keysPressed.current.has('d') || mobileInputs.current.right;
+      const jump = keysPressed.current.has('ArrowUp') || keysPressed.current.has('w') || keysPressed.current.has(' ') || mobileInputs.current.jump;
+      const dash = keysPressed.current.has('Shift') || mobileInputs.current.dash;
 
       // Movement
       if (moveLeft) {
@@ -222,12 +239,14 @@ export const useGameEngine = () => {
         keysPressed.current.delete('ArrowUp');
         keysPressed.current.delete('w');
         keysPressed.current.delete(' ');
+        mobileInputs.current.jump = false;
       } else if (jump && !isGrounded && doubleJumpAvailable.current && prev.selectedCharacter === 'hywon') {
         newVy = -character.jumpPower * 0.85;
         doubleJumpAvailable.current = false;
         keysPressed.current.delete('ArrowUp');
         keysPressed.current.delete('w');
         keysPressed.current.delete(' ');
+        mobileInputs.current.jump = false;
       }
 
       // Dash ability for Junnior
@@ -236,6 +255,7 @@ export const useGameEngine = () => {
         dashCooldown.current = true;
         setTimeout(() => { dashCooldown.current = false; }, 800);
         keysPressed.current.delete('Shift');
+        mobileInputs.current.dash = false;
       }
 
       // Apply gravity
@@ -463,5 +483,6 @@ export const useGameEngine = () => {
     restartLevel,
     nextLevel,
     selectLevel,
+    triggerMobileInput,
   };
 };

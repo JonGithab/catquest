@@ -6,6 +6,7 @@ import { GameHUD } from './GameHUD';
 import { PauseMenu } from './PauseMenu';
 import { GameOverScreen } from './GameOverScreen';
 import { LevelCompleteScreen } from './LevelCompleteScreen';
+import { MobileControls } from './MobileControls';
 
 export const Game = () => {
   const {
@@ -20,6 +21,7 @@ export const Game = () => {
     restartLevel,
     nextLevel,
     selectLevel,
+    triggerMobileInput,
   } = useGameEngine();
 
   const handleMainMenu = () => {
@@ -43,7 +45,7 @@ export const Game = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-foreground/10">
+    <div className="min-h-screen flex items-center justify-center p-2 sm:p-4 bg-foreground/10 pb-24 md:pb-4">
       <div className="relative">
         {/* Game World */}
         <GameWorld
@@ -95,8 +97,21 @@ export const Game = () => {
           )}
         </AnimatePresence>
 
-        {/* Mobile Controls Hint */}
-        <div className="mt-4 text-center text-muted-foreground text-sm">
+        {/* Mobile Controls */}
+        {!gameState.isPaused && !gameState.isGameOver && !gameState.isLevelComplete && (
+          <MobileControls
+            onLeftStart={() => triggerMobileInput('left', true)}
+            onLeftEnd={() => triggerMobileInput('left', false)}
+            onRightStart={() => triggerMobileInput('right', true)}
+            onRightEnd={() => triggerMobileInput('right', false)}
+            onJump={() => triggerMobileInput('jump', true)}
+            onDash={() => triggerMobileInput('dash', true)}
+            characterType={gameState.selectedCharacter}
+          />
+        )}
+
+        {/* Desktop Controls Hint */}
+        <div className="mt-4 text-center text-muted-foreground text-xs sm:text-sm hidden md:block">
           Use arrow keys or WASD to move • Space or ↑ to jump • ESC to pause
         </div>
       </div>
