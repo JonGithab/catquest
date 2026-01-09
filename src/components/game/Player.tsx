@@ -14,7 +14,7 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
   
   const getBodyColor = () => {
     if (isHywon) return 'bg-primary';
-    if (isLou) return 'bg-secondary';
+    if (isLou) return 'bg-foreground';
     if (isTeri) return 'bg-destructive';
     return 'bg-accent';
   };
