@@ -10,16 +10,19 @@ interface PlayerProps {
 export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => {
   const isHywon = characterType === 'hywon';
   const isLou = characterType === 'lou';
+  const isTeri = characterType === 'teri';
   
   const getBodyColor = () => {
     if (isHywon) return 'bg-primary';
     if (isLou) return 'bg-secondary';
+    if (isTeri) return 'bg-destructive';
     return 'bg-accent';
   };
 
   const getBlushColor = () => {
     if (isHywon) return 'bg-pink-300';
     if (isLou) return 'bg-blue-300';
+    if (isTeri) return 'bg-rose-300';
     return 'bg-orange-300';
   };
   
@@ -80,7 +83,7 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           />
         </div>
 
-        {/* Character accessories: Hywon's bow / Junnior's flame / Lou's wings */}
+        {/* Character accessories: Hywon's bow / Junnior's flame / Lou's wings / Teri's claws */}
         {isHywon ? (
           <div className="absolute -top-2 left-1/2 -translate-x-1/2">
             <div className="w-6 h-3 bg-secondary rounded-full" />
@@ -113,6 +116,35 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
             </motion.div>
             {/* Goggles on head */}
             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-8 h-2 bg-amber-600 rounded-full" />
+          </>
+        ) : isTeri ? (
+          <>
+            {/* Teri's climbing claws on hands */}
+            <motion.div 
+              className="absolute top-6 -left-2"
+              animate={player.isMoving ? { rotate: [-10, 10, -10] } : { rotate: 0 }}
+              transition={{ duration: 0.2, repeat: player.isMoving ? Infinity : 0 }}
+            >
+              <div className="flex flex-col gap-0.5">
+                <div className="w-3 h-1 bg-slate-400 rounded-full transform -rotate-45" />
+                <div className="w-3 h-1 bg-slate-400 rounded-full transform -rotate-45" />
+                <div className="w-3 h-1 bg-slate-400 rounded-full transform -rotate-45" />
+              </div>
+            </motion.div>
+            <motion.div 
+              className="absolute top-6 -right-2"
+              animate={player.isMoving ? { rotate: [10, -10, 10] } : { rotate: 0 }}
+              transition={{ duration: 0.2, repeat: player.isMoving ? Infinity : 0 }}
+            >
+              <div className="flex flex-col gap-0.5">
+                <div className="w-3 h-1 bg-slate-400 rounded-full transform rotate-45" />
+                <div className="w-3 h-1 bg-slate-400 rounded-full transform rotate-45" />
+                <div className="w-3 h-1 bg-slate-400 rounded-full transform rotate-45" />
+              </div>
+            </motion.div>
+            {/* Headband */}
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-2 bg-destructive/80 rounded-full" />
+            <div className="absolute -top-2 right-0 w-3 h-4 bg-destructive/80 rounded-sm transform rotate-12" />
           </>
         ) : (
           <motion.div 
