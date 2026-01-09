@@ -406,12 +406,12 @@ export const levels: Level[] = [
     portal: { id: 'portal-7', x: 2700, y: 440, targetLevel: 8, active: true },
   },
 
-  // Level 8 - Rooftop (City skyline panorama)
+  // Level 8 - City Skyline
   {
     id: 8,
-    name: 'Rooftop',
-    theme: 'rooftop',
-    background: 'gradient-rooftop',
+    name: 'City Skyline',
+    theme: 'skyline',
+    background: 'gradient-skyline',
     width: 3000,
     height: 600,
     playerStart: { x: 80, y: 400 },

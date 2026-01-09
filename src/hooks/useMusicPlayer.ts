@@ -1,6 +1,6 @@
 import { useCallback, useRef, useEffect } from 'react';
 
-type Theme = 'meadow' | 'forest' | 'sky' | 'building' | 'whitten' | 'donuts' | 'c2' | 'rooftop' | 'metro' | 'catwalk';
+type Theme = 'meadow' | 'forest' | 'sky' | 'building' | 'whitten' | 'donuts' | 'c2' | 'skyline' | 'metro' | 'catwalk';
 
 export const useMusicPlayer = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
