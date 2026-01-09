@@ -40,10 +40,10 @@ export const levels: Level[] = [
     portal: { id: 'portal-1', x: 1480, y: 440, targetLevel: 2, active: true },
   },
   
-  // Level 2 - Enchanted Forest (Medium difficulty)
+  // Level 2 - College Park Forest (Medium difficulty)
   {
     id: 2,
-    name: 'Enchanted Forest',
+    name: 'College Park Forest',
     theme: 'forest',
     background: 'gradient-sunset',
     width: 1800,
