@@ -9,6 +9,7 @@ interface PlayerProps {
 
 export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => {
   const isHywon = characterType === 'hywon';
+  const isJunnior = characterType === 'junnior';
   const isLou = characterType === 'lou';
   const isTeri = characterType === 'teri';
   
@@ -174,31 +175,79 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-2 bg-destructive/80 rounded-full" />
             <div className="absolute -top-2 right-0 w-3 h-4 bg-destructive/80 rounded-sm transform rotate-12" />
           </>
-        ) : (
-          <motion.div 
-            className="absolute -top-3 left-1/2 -translate-x-1/2"
-            animate={{ 
-              y: [0, -3, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{ duration: 0.3, repeat: Infinity }}
-          >
-            <div className="w-4 h-5 bg-orange-500 rounded-t-full opacity-90" />
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-3 bg-yellow-400 rounded-t-full" />
-          </motion.div>
-        )}
+        ) : isJunnior ? (
+          <>
+            {/* Junnior's flame */}
+            <motion.div 
+              className="absolute -top-3 left-1/2 -translate-x-1/2"
+              animate={{ 
+                y: [0, -3, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{ duration: 0.3, repeat: Infinity }}
+            >
+              <div className="w-4 h-5 bg-orange-500 rounded-t-full opacity-90" />
+              <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-3 bg-yellow-400 rounded-t-full" />
+            </motion.div>
+            
+            {/* Junnior's bike */}
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-14">
+              {/* Back wheel */}
+              <motion.div 
+                className="absolute left-0 bottom-0 w-5 h-5 rounded-full border-2 border-gray-700 bg-gray-800"
+                animate={player.isMoving ? { rotate: 360 } : { rotate: 0 }}
+                transition={{ duration: 0.3, repeat: player.isMoving ? Infinity : 0, ease: "linear" }}
+              >
+                <div className="absolute inset-1 rounded-full bg-gray-600" />
+                <div className="absolute inset-1.5 rounded-full bg-gray-700" />
+              </motion.div>
+              
+              {/* Front wheel */}
+              <motion.div 
+                className="absolute right-0 bottom-0 w-5 h-5 rounded-full border-2 border-gray-700 bg-gray-800"
+                animate={player.isMoving ? { rotate: 360 } : { rotate: 0 }}
+                transition={{ duration: 0.3, repeat: player.isMoving ? Infinity : 0, ease: "linear" }}
+              >
+                <div className="absolute inset-1 rounded-full bg-gray-600" />
+                <div className="absolute inset-1.5 rounded-full bg-gray-700" />
+              </motion.div>
+              
+              {/* Bike frame */}
+              <div className="absolute bottom-2 left-2 w-10 h-1.5 bg-orange-600 rounded-full transform -rotate-6" />
+              <div className="absolute bottom-2 left-2 w-4 h-1 bg-orange-600 rounded-full transform rotate-45" />
+              <div className="absolute bottom-3 right-2 w-3 h-1 bg-orange-600 rounded-full transform -rotate-60" />
+              
+              {/* Exhaust flame */}
+              <motion.div
+                className="absolute -left-2 bottom-2"
+                animate={{ 
+                  scaleX: player.isMoving ? [1, 1.5, 1] : 0.5,
+                  opacity: player.isMoving ? [0.8, 1, 0.8] : 0.3 
+                }}
+                transition={{ duration: 0.15, repeat: Infinity }}
+              >
+                <div className="w-3 h-1.5 bg-orange-500 rounded-l-full" />
+                <div className="absolute left-0 top-0 w-2 h-1 bg-yellow-400 rounded-l-full" />
+              </motion.div>
+            </div>
+          </>
+        ) : null}
 
-        {/* Legs */}
-        <motion.div 
-          className="absolute -bottom-2 left-2 w-3 h-4 bg-foreground/30 rounded-b-lg"
-          animate={player.isMoving ? { rotate: [-15, 15, -15] } : { rotate: 0 }}
-          transition={{ duration: 0.15, repeat: player.isMoving ? Infinity : 0 }}
-        />
-        <motion.div 
-          className="absolute -bottom-2 right-2 w-3 h-4 bg-foreground/30 rounded-b-lg"
-          animate={player.isMoving ? { rotate: [15, -15, 15] } : { rotate: 0 }}
-          transition={{ duration: 0.15, repeat: player.isMoving ? Infinity : 0 }}
-        />
+        {/* Legs - hidden for Junnior since on bike */}
+        {!isJunnior && (
+          <>
+            <motion.div 
+              className="absolute -bottom-2 left-2 w-3 h-4 bg-foreground/30 rounded-b-lg"
+              animate={player.isMoving ? { rotate: [-15, 15, -15] } : { rotate: 0 }}
+              transition={{ duration: 0.15, repeat: player.isMoving ? Infinity : 0 }}
+            />
+            <motion.div 
+              className="absolute -bottom-2 right-2 w-3 h-4 bg-foreground/30 rounded-b-lg"
+              animate={player.isMoving ? { rotate: [15, -15, 15] } : { rotate: 0 }}
+              transition={{ duration: 0.15, repeat: player.isMoving ? Infinity : 0 }}
+            />
+          </>
+        )}
       </div>
     </motion.div>
   );

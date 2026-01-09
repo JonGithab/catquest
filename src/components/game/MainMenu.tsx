@@ -129,11 +129,28 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                         <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-1.5 sm:w-4 sm:h-2 bg-secondary rounded-full" />
                       )}
                       {char.id === 'junnior' && (
-                        <motion.div 
-                          className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-3 sm:w-3 sm:h-4 bg-orange-500 rounded-t-full"
-                          animate={{ y: [0, -2, 0] }}
-                          transition={{ duration: 0.4, repeat: Infinity }}
-                        />
+                        <>
+                          {/* Flame */}
+                          <motion.div 
+                            className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-3 sm:w-3 sm:h-4 bg-orange-500 rounded-t-full"
+                            animate={{ y: [0, -2, 0] }}
+                            transition={{ duration: 0.4, repeat: Infinity }}
+                          />
+                          {/* Mini bike */}
+                          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-10">
+                            <motion.div 
+                              className="absolute left-0 bottom-0 w-3 h-3 rounded-full border border-gray-700 bg-gray-800"
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+                            />
+                            <motion.div 
+                              className="absolute right-0 bottom-0 w-3 h-3 rounded-full border border-gray-700 bg-gray-800"
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+                            />
+                            <div className="absolute bottom-1 left-1 w-7 h-1 bg-orange-600 rounded-full" />
+                          </div>
+                        </>
                       )}
                       {char.id === 'lou' && (
                         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-3 rounded-t-full" style={{ backgroundColor: '#556B2F' }} />
