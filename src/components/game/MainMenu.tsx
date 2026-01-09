@@ -12,7 +12,7 @@ interface MainMenuProps {
 }
 
 export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
-  const [selectedCharacter, setSelectedCharacter] = useState<CharacterType>('hywon');
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterType>('lou');
   const [showLevelSelect, setShowLevelSelect] = useState(false);
 
   const characterList = Object.values(characters);
@@ -106,23 +106,40 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                     whileTap={{ scale: 0.98 }}
                   >
                     {/* Character preview */}
-                    <div className={`w-10 h-12 sm:w-12 sm:h-14 mx-auto mb-2 rounded-t-full rounded-b-lg ${
-                      char.id === 'hywon' ? 'bg-primary' : 'bg-accent'
-                    } relative`}>
+                    <div className={`w-10 h-12 sm:w-12 sm:h-14 mx-auto mb-2 rounded-t-full rounded-b-lg relative overflow-hidden ${
+                      char.id === 'hywon' ? 'bg-primary' : 
+                      char.id === 'lou' ? 'bg-foreground' : 
+                      char.id === 'teri' ? 'bg-destructive' : 'bg-accent'
+                    }`}>
+                      {/* Lou's camo pattern */}
+                      {char.id === 'lou' && (
+                        <>
+                          <div className="absolute top-1 left-0.5 w-2 h-1.5 rounded-full" style={{ backgroundColor: '#556B2F' }} />
+                          <div className="absolute top-3 right-0 w-2.5 h-2 rounded-full" style={{ backgroundColor: '#6B8E23' }} />
+                          <div className="absolute top-6 left-1 w-3 h-1.5 rounded-full" style={{ backgroundColor: '#4A5D23' }} />
+                        </>
+                      )}
                       {/* Eyes */}
                       <div className="absolute top-2 left-0 right-0 flex justify-center gap-1">
                         <div className="w-1.5 h-2 sm:w-2 sm:h-2.5 bg-card rounded-full" />
                         <div className="w-1.5 h-2 sm:w-2 sm:h-2.5 bg-card rounded-full" />
                       </div>
-                      {/* Ability indicator */}
-                      {char.id === 'hywon' ? (
+                      {/* Character-specific accessories */}
+                      {char.id === 'hywon' && (
                         <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-1.5 sm:w-4 sm:h-2 bg-secondary rounded-full" />
-                      ) : (
+                      )}
+                      {char.id === 'junnior' && (
                         <motion.div 
                           className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-3 sm:w-3 sm:h-4 bg-orange-500 rounded-t-full"
                           animate={{ y: [0, -2, 0] }}
                           transition={{ duration: 0.4, repeat: Infinity }}
                         />
+                      )}
+                      {char.id === 'lou' && (
+                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-3 rounded-t-full" style={{ backgroundColor: '#556B2F' }} />
+                      )}
+                      {char.id === 'teri' && (
+                        <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-8 h-1.5 bg-destructive/80 rounded-full" />
                       )}
                     </div>
                     
