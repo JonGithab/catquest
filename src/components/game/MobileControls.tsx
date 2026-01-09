@@ -8,7 +8,7 @@ interface MobileControlsProps {
   onRightEnd: () => void;
   onJump: () => void;
   onDash: () => void;
-  characterType: 'hywon' | 'junnior' | 'lou';
+  characterType: 'hywon' | 'junnior' | 'lou' | 'teri';
 }
 
 export const MobileControls = ({

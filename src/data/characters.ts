@@ -28,6 +28,15 @@ export const characters: Record<string, Character> = {
     speed: 5,
     jumpPower: 14,
   },
+  teri: {
+    id: 'teri',
+    name: 'Teri',
+    description: 'A nimble climber who can scale walls with ease. Great for vertical exploration!',
+    color: 'destructive',
+    ability: 'Wall Climb',
+    speed: 6,
+    jumpPower: 14,
+  },
 };
 
 export const getCharacter = (id: string): Character => {
