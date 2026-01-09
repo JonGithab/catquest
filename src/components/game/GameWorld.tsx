@@ -1370,9 +1370,6 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
 
         {/* Player */}
         <Player player={player} characterType={characterType} cameraOffset={cameraOffset} />
-
-        {/* Bottom danger zone indicator */}
-        <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-t from-destructive/50 to-transparent" />
       </div>
     </div>
   );
