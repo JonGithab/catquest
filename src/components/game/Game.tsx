@@ -135,7 +135,7 @@ export const Game = () => {
               score={gameState.score}
               coins={gameState.player.coins}
               stars={gameState.player.stars}
-              isLastLevel={gameState.currentLevel >= 3}
+              isLastLevel={gameState.currentLevel >= 10}
               onNextLevel={nextLevel}
               onRestart={restartLevel}
               onMainMenu={handleMainMenu}
