@@ -9,6 +9,19 @@ interface PlayerProps {
 
 export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => {
   const isHywon = characterType === 'hywon';
+  const isLou = characterType === 'lou';
+  
+  const getBodyColor = () => {
+    if (isHywon) return 'bg-primary';
+    if (isLou) return 'bg-secondary';
+    return 'bg-accent';
+  };
+
+  const getBlushColor = () => {
+    if (isHywon) return 'bg-pink-300';
+    if (isLou) return 'bg-blue-300';
+    return 'bg-orange-300';
+  };
   
   return (
     <motion.div
@@ -29,9 +42,7 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
       <div className={`relative w-full h-full ${player.isInvulnerable ? 'animate-pulse opacity-70' : ''}`}>
         {/* Main body */}
         <div 
-          className={`absolute inset-0 rounded-t-full rounded-b-lg ${
-            isHywon ? 'bg-primary' : 'bg-accent'
-          }`}
+          className={`absolute inset-0 rounded-t-full rounded-b-lg ${getBodyColor()}`}
           style={{
             boxShadow: isHywon 
               ? 'inset -4px -4px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3)'
@@ -59,8 +70,8 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           
           {/* Cheeks (blush) */}
           <div className="flex gap-6 -mt-0.5">
-            <div className={`w-2 h-1 rounded-full ${isHywon ? 'bg-pink-300' : 'bg-orange-300'} opacity-60`} />
-            <div className={`w-2 h-1 rounded-full ${isHywon ? 'bg-pink-300' : 'bg-orange-300'} opacity-60`} />
+            <div className={`w-2 h-1 rounded-full ${getBlushColor()} opacity-60`} />
+            <div className={`w-2 h-1 rounded-full ${getBlushColor()} opacity-60`} />
           </div>
           
           {/* Smile */}
@@ -69,12 +80,40 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           />
         </div>
 
-        {/* Hywon's bow / Junnior's flame */}
+        {/* Character accessories: Hywon's bow / Junnior's flame / Lou's wings */}
         {isHywon ? (
           <div className="absolute -top-2 left-1/2 -translate-x-1/2">
             <div className="w-6 h-3 bg-secondary rounded-full" />
             <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-secondary rounded-full" />
           </div>
+        ) : isLou ? (
+          <>
+            {/* Lou's glider wings */}
+            <motion.div 
+              className="absolute top-2 -left-4"
+              animate={{ 
+                rotate: player.isJumping && player.velocity.vy > 0 ? [-5, 5, -5] : 0,
+                scaleY: player.isJumping && player.velocity.vy > 0 ? 1.2 : 1,
+              }}
+              transition={{ duration: 0.3, repeat: player.isJumping ? Infinity : 0 }}
+            >
+              <div className="w-5 h-8 bg-gradient-to-l from-secondary to-secondary/60 rounded-l-full origin-right" 
+                style={{ clipPath: 'polygon(0 30%, 100% 0, 100% 100%, 0 70%)' }} />
+            </motion.div>
+            <motion.div 
+              className="absolute top-2 -right-4"
+              animate={{ 
+                rotate: player.isJumping && player.velocity.vy > 0 ? [5, -5, 5] : 0,
+                scaleY: player.isJumping && player.velocity.vy > 0 ? 1.2 : 1,
+              }}
+              transition={{ duration: 0.3, repeat: player.isJumping ? Infinity : 0 }}
+            >
+              <div className="w-5 h-8 bg-gradient-to-r from-secondary to-secondary/60 rounded-r-full origin-left"
+                style={{ clipPath: 'polygon(0 0, 100% 30%, 100% 70%, 0 100%)' }} />
+            </motion.div>
+            {/* Goggles on head */}
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-8 h-2 bg-amber-600 rounded-full" />
+          </>
         ) : (
           <motion.div 
             className="absolute -top-3 left-1/2 -translate-x-1/2"
