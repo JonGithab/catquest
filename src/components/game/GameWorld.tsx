@@ -31,7 +31,7 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(330 70% 85%) 0%, hsl(25 80% 75%) 50%, hsl(35 60% 65%) 100%)';
       case 'c2':
         return 'linear-gradient(180deg, hsl(220 40% 15%) 0%, hsl(210 45% 12%) 50%, hsl(200 50% 8%) 100%)';
-      case 'rooftop':
+      case 'skyline':
         return 'linear-gradient(180deg, hsl(25 60% 65%) 0%, hsl(35 70% 55%) 30%, hsl(220 50% 40%) 100%)';
       case 'metro':
         return 'linear-gradient(180deg, hsl(220 15% 18%) 0%, hsl(220 20% 12%) 50%, hsl(220 25% 8%) 100%)';
@@ -769,7 +769,7 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
           </>
         )}
 
-        {level.theme === 'rooftop' && (
+        {level.theme === 'skyline' && (
           <>
             {/* Sunset/dusk sky gradient overlay */}
             <div 
