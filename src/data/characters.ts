@@ -22,7 +22,7 @@ export const characters: Record<string, Character> = {
   lou: {
     id: 'lou',
     name: 'Lou',
-    description: 'A graceful glider who can float through the air. Perfect for crossing wide gaps!',
+    description: 'A tactical soldier who can glide with a parachute. Perfect for strategic landings!',
     color: 'foreground',
     ability: 'Glide',
     speed: 5,

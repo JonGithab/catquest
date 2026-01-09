@@ -21,7 +21,7 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
 
   const getBlushColor = () => {
     if (isHywon) return 'bg-pink-300';
-    if (isLou) return 'bg-blue-300';
+    if (isLou) return 'bg-green-700';
     if (isTeri) return 'bg-rose-300';
     return 'bg-orange-300';
   };
@@ -91,31 +91,43 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           </div>
         ) : isLou ? (
           <>
-            {/* Lou's glider wings */}
+            {/* Lou's military helmet */}
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-11 h-5 bg-olive-700 rounded-t-full"
+              style={{ backgroundColor: '#556B2F' }} />
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-9 h-2 bg-olive-600 rounded-sm"
+              style={{ backgroundColor: '#6B8E23' }} />
+            {/* Helmet strap */}
+            <div className="absolute top-4 left-0 w-1 h-3 rounded-full"
+              style={{ backgroundColor: '#3d3d3d' }} />
+            <div className="absolute top-4 right-0 w-1 h-3 rounded-full"
+              style={{ backgroundColor: '#3d3d3d' }} />
+            
+            {/* Dog tags */}
             <motion.div 
-              className="absolute top-2 -left-4"
-              animate={{ 
-                rotate: player.isJumping && player.velocity.vy > 0 ? [-5, 5, -5] : 0,
-                scaleY: player.isJumping && player.velocity.vy > 0 ? 1.2 : 1,
-              }}
-              transition={{ duration: 0.3, repeat: player.isJumping ? Infinity : 0 }}
+              className="absolute top-10 left-1/2 -translate-x-1/2"
+              animate={{ rotate: player.isMoving ? [-5, 5, -5] : 0 }}
+              transition={{ duration: 0.2, repeat: player.isMoving ? Infinity : 0 }}
             >
-              <div className="w-5 h-8 bg-gradient-to-l from-secondary to-secondary/60 rounded-l-full origin-right" 
-                style={{ clipPath: 'polygon(0 30%, 100% 0, 100% 100%, 0 70%)' }} />
+              <div className="w-1 h-3 bg-gray-400 rounded-sm" />
+              <div className="w-3 h-4 bg-gray-300 rounded-sm border border-gray-400" />
             </motion.div>
-            <motion.div 
-              className="absolute top-2 -right-4"
-              animate={{ 
-                rotate: player.isJumping && player.velocity.vy > 0 ? [5, -5, 5] : 0,
-                scaleY: player.isJumping && player.velocity.vy > 0 ? 1.2 : 1,
-              }}
-              transition={{ duration: 0.3, repeat: player.isJumping ? Infinity : 0 }}
-            >
-              <div className="w-5 h-8 bg-gradient-to-r from-secondary to-secondary/60 rounded-r-full origin-left"
-                style={{ clipPath: 'polygon(0 0, 100% 30%, 100% 70%, 0 100%)' }} />
-            </motion.div>
-            {/* Goggles on head */}
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-8 h-2 bg-amber-600 rounded-full" />
+
+            {/* Parachute pack on back (visible when jumping) */}
+            {player.isJumping && player.velocity.vy > 0 && (
+              <motion.div
+                className="absolute -top-8 left-1/2 -translate-x-1/2"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="w-16 h-10 rounded-t-full"
+                  style={{ backgroundColor: '#556B2F', opacity: 0.9 }} />
+                {/* Parachute lines */}
+                <div className="absolute bottom-0 left-2 w-0.5 h-6 bg-gray-600 transform -rotate-12" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0.5 h-5 bg-gray-600" />
+                <div className="absolute bottom-0 right-2 w-0.5 h-6 bg-gray-600 transform rotate-12" />
+              </motion.div>
+            )}
           </>
         ) : isTeri ? (
           <>
