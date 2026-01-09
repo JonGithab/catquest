@@ -828,20 +828,23 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                   {/* Windows */}
                   {Array.from({ length: Math.floor(b.h / 25) }).map((_, row) => (
                     <div key={row} className="flex justify-around px-1 mt-2">
-                      {Array.from({ length: Math.floor(b.w / 15) }).map((_, col) => (
-                        <div
-                          key={col}
-                          className="w-2 h-3 rounded-sm"
-                          style={{
-                            background: Math.random() > 0.3 
-                              ? 'hsl(45 80% 70%)' 
-                              : 'hsl(220 20% 30%)',
-                            boxShadow: Math.random() > 0.3 
-                              ? '0 0 4px hsl(45 80% 60%)' 
-                              : 'none',
-                          }}
-                        />
-                      ))}
+                      {Array.from({ length: Math.floor(b.w / 15) }).map((_, col) => {
+                        const isLit = (row + col + i) % 3 !== 0;
+                        return (
+                          <div
+                            key={col}
+                            className="w-2 h-3 rounded-sm"
+                            style={{
+                              background: isLit 
+                                ? 'hsl(45 80% 70%)' 
+                                : 'hsl(220 20% 30%)',
+                              boxShadow: isLit 
+                                ? '0 0 4px hsl(45 80% 60%)' 
+                                : 'none',
+                            }}
+                          />
+                        );
+                      })}
                     </div>
                   ))}
                 </div>
@@ -878,20 +881,23 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                   {/* Lit windows */}
                   {Array.from({ length: Math.floor(b.h / 20) }).map((_, row) => (
                     <div key={row} className="flex justify-around px-1 mt-1.5">
-                      {Array.from({ length: Math.floor(b.w / 12) }).map((_, col) => (
-                        <div
-                          key={col}
-                          className="w-1.5 h-2 rounded-sm"
-                          style={{
-                            background: Math.random() > 0.4 
-                              ? 'hsl(40 75% 65%)' 
-                              : 'hsl(220 25% 35%)',
-                            boxShadow: Math.random() > 0.4 
-                              ? '0 0 3px hsl(40 75% 55%)' 
-                              : 'none',
-                          }}
-                        />
-                      ))}
+                      {Array.from({ length: Math.floor(b.w / 12) }).map((_, col) => {
+                        const isLit = (row + col + i) % 2 !== 0;
+                        return (
+                          <div
+                            key={col}
+                            className="w-1.5 h-2 rounded-sm"
+                            style={{
+                              background: isLit 
+                                ? 'hsl(40 75% 65%)' 
+                                : 'hsl(220 25% 35%)',
+                              boxShadow: isLit 
+                                ? '0 0 3px hsl(40 75% 55%)' 
+                                : 'none',
+                            }}
+                          />
+                        );
+                      })}
                     </div>
                   ))}
                 </div>
