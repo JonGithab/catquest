@@ -8,7 +8,7 @@ export const characters: Record<string, Character> = {
     color: 'primary',
     ability: 'Double Jump',
     speed: 5,
-    jumpPower: 12,
+    jumpPower: 14,
   },
   junnior: {
     id: 'junnior',
@@ -17,7 +17,7 @@ export const characters: Record<string, Character> = {
     color: 'accent',
     ability: 'Fire Dash',
     speed: 7,
-    jumpPower: 12,
+    jumpPower: 14,
   },
 };
 
