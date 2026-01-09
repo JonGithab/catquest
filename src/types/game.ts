@@ -1,6 +1,6 @@
 // Game Types for CatQuest
 
-export type CharacterType = 'hywon' | 'junnior';
+export type CharacterType = 'hywon' | 'junnior' | 'lou';
 
 export interface Position {
   x: number;

@@ -19,6 +19,15 @@ export const characters: Record<string, Character> = {
     speed: 7,
     jumpPower: 14,
   },
+  lou: {
+    id: 'lou',
+    name: 'Lou',
+    description: 'A graceful glider who can float through the air. Perfect for crossing wide gaps!',
+    color: 'secondary',
+    ability: 'Glide',
+    speed: 5,
+    jumpPower: 14,
+  },
 };
 
 export const getCharacter = (id: string): Character => {
