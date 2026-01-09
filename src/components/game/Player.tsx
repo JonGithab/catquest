@@ -8,20 +8,20 @@ interface PlayerProps {
 }
 
 export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => {
-  const isHywon = characterType === 'hywon';
+  const isJorge = characterType === 'jorge';
   const isJunnior = characterType === 'junnior';
   const isLou = characterType === 'lou';
   const isTeri = characterType === 'teri';
   
   const getBodyColor = () => {
-    if (isHywon) return 'bg-primary';
+    if (isJorge) return 'bg-primary';
     if (isLou) return 'bg-foreground';
     if (isTeri) return 'bg-destructive';
     return 'bg-accent';
   };
 
   const getBlushColor = () => {
-    if (isHywon) return 'bg-pink-300';
+    if (isJorge) return 'bg-pink-300';
     if (isLou) return 'bg-green-700';
     if (isTeri) return 'bg-rose-300';
     return 'bg-orange-300';
@@ -33,8 +33,8 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
       style={{
         left: player.position.x - cameraOffset,
         top: player.position.y,
-        width: 40,
-        height: 50,
+        width: isJorge ? 50 : 40,
+        height: isJorge ? 55 : 50,
       }}
       animate={{
         scaleX: player.facingRight ? 1 : -1,
@@ -100,12 +100,25 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           />
         </div>
 
-        {/* Character accessories: Hywon's bow / Junnior's flame / Lou's wings / Teri's claws */}
-        {isHywon ? (
-          <div className="absolute -top-2 left-1/2 -translate-x-1/2">
-            <div className="w-6 h-3 bg-secondary rounded-full" />
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-secondary rounded-full" />
-          </div>
+        {/* Character accessories: Jorge's hat + cane / Junnior's flame / Lou's wings / Teri's claws */}
+        {isJorge ? (
+          <>
+            {/* Jorge's top hat */}
+            <div className="absolute -top-5 left-1/2 -translate-x-1/2">
+              <div className="w-8 h-5 bg-gray-800 rounded-t-md" />
+              <div className="w-10 h-2 bg-gray-800 rounded-full -mt-0.5" />
+              <div className="absolute top-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-amber-600" />
+            </div>
+            {/* Jorge's cane */}
+            <motion.div 
+              className="absolute top-4 -right-4"
+              animate={player.isMoving ? { rotate: [-10, 10, -10] } : { rotate: 5 }}
+              transition={{ duration: 0.3, repeat: player.isMoving ? Infinity : 0 }}
+            >
+              <div className="w-2 h-12 bg-amber-800 rounded-full" />
+              <div className="absolute -top-1 -left-1 w-4 h-3 bg-amber-700 rounded-t-full border-2 border-amber-900" />
+            </motion.div>
+          </>
         ) : isLou ? (
           <>
             {/* Lou's military helmet */}
