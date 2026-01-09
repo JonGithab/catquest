@@ -1,10 +1,10 @@
 import { Level } from '@/types/game';
 
 export const levels: Level[] = [
-  // Level 1 - Sunny Meadow (Tutorial-ish, easy)
+  // Level 1 - Riverdale Meadow (Tutorial-ish, easy)
   {
     id: 1,
-    name: 'Sunny Meadow',
+    name: 'Riverdale Meadow',
     theme: 'meadow',
     background: 'gradient-sky',
     width: 1600,
