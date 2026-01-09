@@ -132,8 +132,13 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                             <div className="w-4 h-3 bg-gray-800 rounded-t-md" />
                             <div className="w-5 h-1 bg-gray-800 rounded-full -mt-0.5" />
                           </div>
-                          {/* Cane */}
-                          <div className="absolute top-4 -right-2 w-1 h-8 bg-amber-800 rounded-full" />
+                          {/* Sledge hammer */}
+                          <div className="absolute top-3 -right-3">
+                            {/* Handle */}
+                            <div className="w-1 h-9 bg-amber-700 rounded-full" />
+                            {/* Hammer head */}
+                            <div className="absolute -top-1 -left-1.5 w-4 h-3 bg-gray-600 rounded-sm" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3)' }} />
+                          </div>
                         </>
                       )}
                       {char.id === 'junnior' && (
