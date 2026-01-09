@@ -30,12 +30,73 @@ export const VictoryScreen = ({
     size: 6 + Math.random() * 8,
   }));
 
+  // Graffiti elements
+  const graffitiTexts = [
+    { text: 'CHAMPION!', x: 5, y: 15, rotate: -12, color: 'hsl(340 80% 60%)' },
+    { text: 'MEOW!', x: 75, y: 20, rotate: 8, color: 'hsl(45 90% 55%)' },
+    { text: '★★★', x: 10, y: 75, rotate: -5, color: 'hsl(280 70% 60%)' },
+    { text: 'PURR-FECT!', x: 70, y: 80, rotate: 10, color: 'hsl(160 70% 50%)' },
+    { text: '#1', x: 85, y: 50, rotate: -8, color: 'hsl(200 80% 55%)' },
+    { text: 'LEGEND', x: 3, y: 45, rotate: 15, color: 'hsl(25 90% 55%)' },
+  ];
+
+  // Spray paint drips
+  const sprayDrips = Array.from({ length: 8 }, (_, i) => ({
+    id: i,
+    x: 10 + (i * 12),
+    height: 20 + (i % 3) * 15,
+    color: confettiColors[i % confettiColors.length],
+  }));
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="absolute inset-0 bg-gradient-to-b from-primary/80 via-accent/70 to-secondary/80 backdrop-blur-md z-50 flex items-center justify-center rounded-2xl overflow-hidden"
     >
+      {/* Graffiti Background Elements */}
+      {graffitiTexts.map((graffiti, i) => (
+        <motion.div
+          key={`graffiti-${i}`}
+          className="absolute font-display font-black pointer-events-none select-none"
+          style={{
+            left: `${graffiti.x}%`,
+            top: `${graffiti.y}%`,
+            transform: `rotate(${graffiti.rotate}deg)`,
+            color: graffiti.color,
+            fontSize: graffiti.text.length > 5 ? '1.5rem' : '2.5rem',
+            textShadow: `3px 3px 0 rgba(0,0,0,0.3), -1px -1px 0 rgba(255,255,255,0.2)`,
+            WebkitTextStroke: '1px rgba(0,0,0,0.2)',
+          }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.9 }}
+          transition={{ 
+            type: 'spring', 
+            delay: 0.3 + i * 0.15,
+            damping: 10,
+          }}
+        >
+          {graffiti.text}
+        </motion.div>
+      ))}
+
+      {/* Spray paint drips at top */}
+      {sprayDrips.map((drip) => (
+        <motion.div
+          key={`drip-${drip.id}`}
+          className="absolute top-0 rounded-b-full"
+          style={{
+            left: `${drip.x}%`,
+            width: 8,
+            height: drip.height,
+            background: `linear-gradient(180deg, ${drip.color} 0%, transparent 100%)`,
+          }}
+          initial={{ scaleY: 0, originY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ delay: 0.5 + drip.id * 0.1, duration: 0.8 }}
+        />
+      ))}
+
       {/* Confetti */}
       {confettiParticles.map((particle) => (
         <motion.div
@@ -64,27 +125,31 @@ export const VictoryScreen = ({
       ))}
 
       {/* Sparkle effects */}
-      {Array.from({ length: 20 }, (_, i) => (
-        <motion.div
-          key={`sparkle-${i}`}
-          className="absolute"
-          style={{
-            left: `${10 + Math.random() * 80}%`,
-            top: `${10 + Math.random() * 80}%`,
-          }}
-          animate={{
-            scale: [0, 1, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: 1.5,
-            delay: Math.random() * 3,
-            repeat: Infinity,
-          }}
-        >
-          <Sparkles className="w-4 h-4 text-game-coin" />
-        </motion.div>
-      ))}
+      {Array.from({ length: 20 }, (_, i) => {
+        const sparkleX = 10 + (i * 4.2);
+        const sparkleY = 10 + ((i * 17) % 80);
+        return (
+          <motion.div
+            key={`sparkle-${i}`}
+            className="absolute"
+            style={{
+              left: `${sparkleX}%`,
+              top: `${sparkleY}%`,
+            }}
+            animate={{
+              scale: [0, 1, 0],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              delay: i * 0.15,
+              repeat: Infinity,
+            }}
+          >
+            <Sparkles className="w-4 h-4 text-game-coin" />
+          </motion.div>
+        );
+      })}
 
       <motion.div
         initial={{ scale: 0.3, opacity: 0, y: 100 }}
