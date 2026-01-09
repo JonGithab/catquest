@@ -99,8 +99,11 @@ export interface GameState {
   isPaused: boolean;
   isGameOver: boolean;
   isLevelComplete: boolean;
+  isVictory: boolean;
   score: number;
   lives: number;
+  totalCoins: number;
+  totalStars: number;
 }
 
 export type GameAction =
