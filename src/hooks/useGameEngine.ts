@@ -25,7 +25,7 @@ const initialPlayerState: PlayerState = {
 
 const initialGameState: GameState = {
   currentLevel: 1,
-  selectedCharacter: 'hywon',
+  selectedCharacter: 'lou',
   player: initialPlayerState,
   isPlaying: false,
   isPaused: false,
@@ -256,13 +256,13 @@ export const useGameEngine = () => {
       if (jump && isGrounded) {
         newVy = -character.jumpPower;
         isGrounded = false;
-        doubleJumpAvailable.current = prev.selectedCharacter === 'hywon';
+        doubleJumpAvailable.current = prev.selectedCharacter === 'jorge';
         sounds.playJumpSound();
         keysPressed.current.delete('ArrowUp');
         keysPressed.current.delete('w');
         keysPressed.current.delete(' ');
         mobileInputs.current.jump = false;
-      } else if (jump && !isGrounded && doubleJumpAvailable.current && prev.selectedCharacter === 'hywon') {
+      } else if (jump && !isGrounded && doubleJumpAvailable.current && prev.selectedCharacter === 'jorge') {
         newVy = -character.jumpPower * 0.85;
         doubleJumpAvailable.current = false;
         sounds.playDoubleJumpSound();
@@ -307,7 +307,7 @@ export const useGameEngine = () => {
           newY = platform.y - playerHeight;
           newVy = 0;
           groundedThisFrame = true;
-          doubleJumpAvailable.current = prev.selectedCharacter === 'hywon';
+          doubleJumpAvailable.current = prev.selectedCharacter === 'jorge';
         }
 
         // Check horizontal collision

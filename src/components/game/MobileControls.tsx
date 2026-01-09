@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUp, Zap } from 'lucide-react';
+import { CharacterType } from '@/types/game';
 
 interface MobileControlsProps {
   onLeftStart: () => void;
@@ -8,7 +9,7 @@ interface MobileControlsProps {
   onRightEnd: () => void;
   onJump: () => void;
   onDash: () => void;
-  characterType: 'hywon' | 'junnior' | 'lou' | 'teri';
+  characterType: CharacterType;
 }
 
 export const MobileControls = ({

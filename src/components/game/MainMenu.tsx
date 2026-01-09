@@ -106,10 +106,10 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                     whileTap={{ scale: 0.98 }}
                   >
                     {/* Character preview */}
-                    <div className={`w-10 h-12 sm:w-12 sm:h-14 mx-auto mb-2 rounded-t-full rounded-b-lg relative overflow-hidden ${
-                      char.id === 'hywon' ? 'bg-primary' : 
-                      char.id === 'lou' ? 'bg-foreground' : 
-                      char.id === 'teri' ? 'bg-destructive' : 'bg-accent'
+                    <div className={`mx-auto mb-2 rounded-t-full rounded-b-lg relative overflow-hidden ${
+                      char.id === 'jorge' ? 'w-12 h-14 sm:w-14 sm:h-16 bg-primary' : 
+                      char.id === 'lou' ? 'w-10 h-12 sm:w-12 sm:h-14 bg-foreground' : 
+                      char.id === 'teri' ? 'w-10 h-12 sm:w-12 sm:h-14 bg-destructive' : 'w-10 h-12 sm:w-12 sm:h-14 bg-accent'
                     }`}>
                       {/* Lou's camo pattern */}
                       {char.id === 'lou' && (
@@ -125,8 +125,16 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                         <div className="w-1.5 h-2 sm:w-2 sm:h-2.5 bg-card rounded-full" />
                       </div>
                       {/* Character-specific accessories */}
-                      {char.id === 'hywon' && (
-                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-1.5 sm:w-4 sm:h-2 bg-secondary rounded-full" />
+                      {char.id === 'jorge' && (
+                        <>
+                          {/* Top hat */}
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                            <div className="w-4 h-3 bg-gray-800 rounded-t-md" />
+                            <div className="w-5 h-1 bg-gray-800 rounded-full -mt-0.5" />
+                          </div>
+                          {/* Cane */}
+                          <div className="absolute top-4 -right-2 w-1 h-8 bg-amber-800 rounded-full" />
+                        </>
                       )}
                       {char.id === 'junnior' && (
                         <>
@@ -162,7 +170,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                     
                     <h4 className="font-display font-bold text-foreground text-sm sm:text-base">{char.name}</h4>
                     <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground mt-1">
-                      {char.id === 'hywon' ? (
+                      {char.id === 'jorge' ? (
                         <Sparkles className="w-3 h-3" />
                       ) : (
                         <Zap className="w-3 h-3" />
@@ -201,7 +209,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
               <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                 <div>← → or A/D: Move</div>
                 <div>↑, W or Space: Jump</div>
-                <div>Shift: {selectedCharacter === 'hywon' ? 'Double Jump (in air)' : 'Fire Dash'}</div>
+                <div>Shift: {selectedCharacter === 'jorge' ? 'Double Jump (in air)' : 'Fire Dash'}</div>
                 <div>ESC: Pause</div>
               </div>
             </div>
