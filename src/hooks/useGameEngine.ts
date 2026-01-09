@@ -31,8 +31,11 @@ const initialGameState: GameState = {
   isPaused: false,
   isGameOver: false,
   isLevelComplete: false,
+  isVictory: false,
   score: 0,
   lives: 3,
+  totalCoins: 0,
+  totalStars: 0,
 };
 
 export const useGameEngine = () => {
@@ -120,12 +123,24 @@ export const useGameEngine = () => {
   // Next level
   const nextLevel = useCallback(() => {
     const nextLevelId = gameState.currentLevel + 1;
-    if (nextLevelId <= 3) {
+    if (nextLevelId <= 10) {
+      // Accumulate totals before moving to next level
+      setGameState(prev => ({
+        ...prev,
+        totalCoins: prev.totalCoins + prev.player.coins,
+        totalStars: prev.totalStars + prev.player.stars,
+      }));
       initializeLevel(nextLevelId);
       setGameState(prev => ({ ...prev, isPaused: false }));
     } else {
-      // Game complete - return to menu
-      setGameState(initialGameState);
+      // Game complete - show victory screen
+      setGameState(prev => ({
+        ...prev,
+        isVictory: true,
+        isLevelComplete: false,
+        totalCoins: prev.totalCoins + prev.player.coins,
+        totalStars: prev.totalStars + prev.player.stars,
+      }));
     }
   }, [gameState.currentLevel, initializeLevel]);
 

@@ -9,6 +9,7 @@ import { GameHUD } from './GameHUD';
 import { PauseMenu } from './PauseMenu';
 import { GameOverScreen } from './GameOverScreen';
 import { LevelCompleteScreen } from './LevelCompleteScreen';
+import { VictoryScreen } from './VictoryScreen';
 import { MobileControls } from './MobileControls';
 
 export const Game = () => {
@@ -129,7 +130,7 @@ export const Game = () => {
             />
           )}
 
-          {gameState.isLevelComplete && (
+          {gameState.isLevelComplete && !gameState.isVictory && (
             <LevelCompleteScreen
               levelName={level.name}
               score={gameState.score}
@@ -138,6 +139,17 @@ export const Game = () => {
               isLastLevel={gameState.currentLevel >= 10}
               onNextLevel={nextLevel}
               onRestart={restartLevel}
+              onMainMenu={handleMainMenu}
+            />
+          )}
+
+          {gameState.isVictory && (
+            <VictoryScreen
+              totalScore={gameState.score}
+              totalCoins={gameState.totalCoins}
+              totalStars={gameState.totalStars}
+              levelsCompleted={10}
+              onPlayAgain={handleMainMenu}
               onMainMenu={handleMainMenu}
             />
           )}
