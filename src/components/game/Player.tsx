@@ -45,13 +45,29 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
       <div className={`relative w-full h-full ${player.isInvulnerable ? 'animate-pulse opacity-70' : ''}`}>
         {/* Main body */}
         <div 
-          className={`absolute inset-0 rounded-t-full rounded-b-lg ${getBodyColor()}`}
+          className={`absolute inset-0 rounded-t-full rounded-b-lg ${getBodyColor()} overflow-hidden`}
           style={{
-            boxShadow: isHywon 
-              ? 'inset -4px -4px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3)'
-              : 'inset -4px -4px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3)',
+            boxShadow: 'inset -4px -4px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3)',
           }}
-        />
+        >
+          {/* Lou's camo pattern */}
+          {isLou && (
+            <>
+              <div className="absolute top-2 left-1 w-4 h-3 rounded-full transform -rotate-12"
+                style={{ backgroundColor: '#556B2F' }} />
+              <div className="absolute top-6 right-0 w-5 h-4 rounded-full transform rotate-25"
+                style={{ backgroundColor: '#6B8E23' }} />
+              <div className="absolute top-12 left-2 w-6 h-3 rounded-full transform rotate-15"
+                style={{ backgroundColor: '#4A5D23' }} />
+              <div className="absolute top-4 right-2 w-3 h-5 rounded-full transform -rotate-30"
+                style={{ backgroundColor: '#3D4F1F' }} />
+              <div className="absolute top-9 left-0 w-4 h-3 rounded-full transform rotate-45"
+                style={{ backgroundColor: '#556B2F' }} />
+              <div className="absolute bottom-4 right-1 w-5 h-3 rounded-full transform -rotate-20"
+                style={{ backgroundColor: '#6B8E23' }} />
+            </>
+          )}
+        </div>
         
         {/* Face */}
         <div className="absolute top-2 left-0 right-0 flex flex-col items-center">
