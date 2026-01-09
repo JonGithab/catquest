@@ -21,6 +21,8 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
         return 'linear-gradient(180deg, hsl(195 85% 75%) 0%, hsl(195 80% 65%) 50%, hsl(120 50% 70%) 100%)';
       case 'forest':
         return 'linear-gradient(180deg, hsl(30 80% 65%) 0%, hsl(330 60% 55%) 50%, hsl(270 50% 35%) 100%)';
+      case 'purpleline':
+        return 'linear-gradient(180deg, hsl(270 60% 25%) 0%, hsl(280 50% 18%) 50%, hsl(290 45% 12%) 100%)';
       case 'sky':
         return 'linear-gradient(180deg, hsl(250 50% 25%) 0%, hsl(270 45% 20%) 50%, hsl(280 40% 15%) 100%)';
       case 'building':
@@ -119,6 +121,141 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
               >
                 <div className="w-3 h-20 bg-amber-900/60 mx-auto" />
                 <div className="w-16 h-24 bg-green-800/50 rounded-t-full -mt-16" />
+              </div>
+            ))}
+          </>
+        )}
+
+        {level.theme === 'purpleline' && (
+          <>
+            {/* Rail tracks running across the bottom */}
+            <div 
+              className="absolute bottom-24 left-0 right-0 h-4"
+              style={{
+                background: 'hsl(0 0% 30%)',
+                transform: `translateX(${-cameraOffset * 0.8}px)`,
+                width: level.width,
+              }}
+            >
+              {/* Rail ties (wooden planks) */}
+              {Array.from({ length: Math.ceil(level.width / 40) }).map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute top-0 w-6 h-4"
+                  style={{
+                    left: i * 40,
+                    background: 'hsl(25 40% 30%)',
+                    boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.3)',
+                  }}
+                />
+              ))}
+              {/* Metal rails */}
+              <div className="absolute top-0.5 left-0 right-0 h-1 bg-gray-400" style={{ width: level.width }} />
+              <div className="absolute bottom-0.5 left-0 right-0 h-1 bg-gray-400" style={{ width: level.width }} />
+            </div>
+
+            {/* Maryland flags */}
+            {[150, 500, 900, 1300, 1700].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset,
+                  top: 40,
+                }}
+              >
+                {/* Flag pole */}
+                <div className="w-1 h-28 bg-gray-600 mx-auto" />
+                {/* Maryland Flag */}
+                <div 
+                  className="absolute top-2 left-2 w-20 h-12 rounded-sm overflow-hidden grid grid-cols-2 grid-rows-2"
+                  style={{
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+                  }}
+                >
+                  {/* Top-left: Black and gold (Calvert) */}
+                  <div className="relative overflow-hidden">
+                    <div className="absolute inset-0" style={{ background: 'hsl(45 90% 50%)' }} />
+                    <div className="absolute top-0 left-0 w-full h-1/2" style={{ background: 'hsl(0 0% 10%)' }} />
+                    <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rotate-45" style={{ background: 'hsl(45 90% 50%)' }} />
+                  </div>
+                  {/* Top-right: Red and white (Crossland) */}
+                  <div className="relative overflow-hidden">
+                    <div className="absolute inset-0" style={{ background: 'white' }} />
+                    <div className="absolute top-0 left-0 right-0 bottom-0">
+                      <div className="absolute top-0 left-1/2 w-0.5 h-full bg-red-600 -translate-x-1/2" />
+                      <div className="absolute top-1/2 left-0 w-full h-0.5 bg-red-600 -translate-y-1/2" />
+                    </div>
+                  </div>
+                  {/* Bottom-left: Red and white (Crossland) */}
+                  <div className="relative overflow-hidden">
+                    <div className="absolute inset-0" style={{ background: 'white' }} />
+                    <div className="absolute top-0 left-0 right-0 bottom-0">
+                      <div className="absolute top-0 left-1/2 w-0.5 h-full bg-red-600 -translate-x-1/2" />
+                      <div className="absolute top-1/2 left-0 w-full h-0.5 bg-red-600 -translate-y-1/2" />
+                    </div>
+                  </div>
+                  {/* Bottom-right: Black and gold (Calvert) */}
+                  <div className="relative overflow-hidden">
+                    <div className="absolute inset-0" style={{ background: 'hsl(45 90% 50%)' }} />
+                    <div className="absolute top-0 left-0 w-full h-1/2" style={{ background: 'hsl(0 0% 10%)' }} />
+                    <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rotate-45" style={{ background: 'hsl(45 90% 50%)' }} />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Purple Line train cars in background */}
+            {[200, 800, 1400].map((x, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset * 0.6,
+                  top: 180,
+                }}
+              >
+                <div 
+                  className="w-24 h-14 rounded-lg relative"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(270 60% 45%) 0%, hsl(280 55% 35%) 100%)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                  }}
+                >
+                  {/* Windows */}
+                  <div className="absolute top-2 left-2 right-2 flex gap-1">
+                    <div className="flex-1 h-4 bg-blue-200/60 rounded" />
+                    <div className="flex-1 h-4 bg-blue-200/60 rounded" />
+                    <div className="flex-1 h-4 bg-blue-200/60 rounded" />
+                  </div>
+                  {/* Purple Line stripe */}
+                  <div className="absolute bottom-3 left-0 right-0 h-2 bg-purple-400" />
+                  {/* Wheels */}
+                  <div className="absolute -bottom-2 left-3 w-4 h-4 rounded-full bg-gray-700 border-2 border-gray-500" />
+                  <div className="absolute -bottom-2 right-3 w-4 h-4 rounded-full bg-gray-700 border-2 border-gray-500" />
+                </div>
+              </div>
+            ))}
+
+            {/* Overhead power lines */}
+            <div 
+              className="absolute top-20 left-0 h-0.5 bg-gray-500"
+              style={{
+                width: level.width,
+                transform: `translateX(${-cameraOffset * 0.9}px)`,
+              }}
+            />
+            {/* Power line poles */}
+            {[100, 400, 700, 1000, 1300, 1600, 1900].map((x, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-24 bg-gray-600"
+                style={{
+                  left: x - cameraOffset,
+                  top: 20,
+                }}
+              >
+                <div className="absolute -top-1 -left-2 w-6 h-2 bg-gray-500 rounded" />
               </div>
             ))}
           </>
