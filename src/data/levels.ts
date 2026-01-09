@@ -90,12 +90,12 @@ export const levels: Level[] = [
     portal: { id: 'portal-2', x: 1680, y: 440, targetLevel: 3, active: true },
   },
   
-  // Level 3 - Sky Kingdom (Hard difficulty)
+  // Level 3 - Purple Line (Rail transit theme with Maryland pride)
   {
     id: 3,
-    name: 'Sky Kingdom',
-    theme: 'sky',
-    background: 'gradient-night',
+    name: 'Purple Line',
+    theme: 'purpleline',
+    background: 'gradient-purpleline',
     width: 2000,
     height: 600,
     playerStart: { x: 80, y: 450 },
