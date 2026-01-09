@@ -20,7 +20,7 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
       case 'meadow':
         return 'linear-gradient(180deg, hsl(195 85% 75%) 0%, hsl(195 80% 65%) 50%, hsl(120 50% 70%) 100%)';
       case 'forest':
-        return 'linear-gradient(180deg, hsl(30 80% 65%) 0%, hsl(330 60% 55%) 50%, hsl(270 50% 35%) 100%)';
+        return 'linear-gradient(180deg, hsl(200 70% 65%) 0%, hsl(140 50% 55%) 50%, hsl(120 45% 35%) 100%)';
       case 'purpleline':
         return 'linear-gradient(180deg, hsl(270 60% 25%) 0%, hsl(280 50% 18%) 50%, hsl(290 45% 12%) 100%)';
       case 'sky':
@@ -104,25 +104,149 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
 
         {level.theme === 'forest' && (
           <>
-            {/* Moon */}
+            {/* Sun */}
             <div 
-              className="absolute top-8 w-12 h-12 rounded-full bg-yellow-100"
+              className="absolute top-8 w-14 h-14 rounded-full bg-yellow-300"
               style={{ 
-                left: 650 - cameraOffset * 0.1,
-                boxShadow: '0 0 30px hsl(45 70% 80% / 0.5)',
+                left: 680 - cameraOffset * 0.1,
+                boxShadow: '0 0 50px hsl(45 95% 60% / 0.5)',
               }}
             />
-            {/* Trees in background */}
-            {[100, 300, 600, 1000, 1400].map((x, i) => (
+            {/* Clouds */}
+            <div 
+              className="absolute top-12 w-28 h-9 bg-white/70 rounded-full"
+              style={{ left: 150 - cameraOffset * 0.2 }}
+            />
+            <div 
+              className="absolute top-20 w-20 h-7 bg-white/60 rounded-full"
+              style={{ left: 450 - cameraOffset * 0.2 }}
+            />
+            <div 
+              className="absolute top-16 w-24 h-8 bg-white/65 rounded-full"
+              style={{ left: 800 - cameraOffset * 0.2 }}
+            />
+            {/* Campus buildings in background */}
+            {[80, 400, 750, 1150, 1550].map((x, i) => (
               <div 
-                key={i}
-                className="absolute bottom-20"
-                style={{ left: x - cameraOffset * 0.5 }}
+                key={`bldg-${i}`}
+                className="absolute"
+                style={{ 
+                  left: x - cameraOffset * 0.3,
+                  bottom: 120,
+                }}
               >
-                <div className="w-3 h-20 bg-amber-900/60 mx-auto" />
-                <div className="w-16 h-24 bg-green-800/50 rounded-t-full -mt-16" />
+                {/* Main building */}
+                <div 
+                  className="relative"
+                  style={{
+                    width: 70 + (i % 2) * 20,
+                    height: 80 + (i % 3) * 25,
+                    background: `linear-gradient(180deg, hsl(${15 + i * 5} 25% 70%) 0%, hsl(${15 + i * 5} 20% 55%) 100%)`,
+                    borderRadius: '4px 4px 0 0',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  }}
+                >
+                  {/* Windows */}
+                  <div className="absolute top-3 left-2 right-2 grid grid-cols-3 gap-1">
+                    {Array.from({ length: 6 }).map((_, j) => (
+                      <div key={j} className="h-4 bg-blue-300/60 rounded-sm" />
+                    ))}
+                  </div>
+                  {/* Door */}
+                  <div 
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-10 rounded-t-lg"
+                    style={{ background: 'hsl(25 35% 35%)' }}
+                  />
+                </div>
               </div>
             ))}
+            {/* Tall green trees */}
+            {[50, 180, 350, 550, 700, 900, 1100, 1300, 1500, 1700].map((x, i) => (
+              <div 
+                key={`tree-${i}`}
+                className="absolute"
+                style={{ 
+                  left: x - cameraOffset * 0.5,
+                  bottom: 100,
+                }}
+              >
+                {/* Tree trunk */}
+                <div 
+                  className="w-4 h-24 mx-auto"
+                  style={{ background: 'hsl(25 50% 30%)' }}
+                />
+                {/* Tree foliage - layered */}
+                <div 
+                  className="absolute -top-8 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full"
+                  style={{ background: `hsl(${120 + i * 5} 55% ${35 + (i % 3) * 5}%)` }}
+                />
+                <div 
+                  className="absolute -top-14 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full"
+                  style={{ background: `hsl(${125 + i * 5} 50% ${40 + (i % 3) * 5}%)` }}
+                />
+                <div 
+                  className="absolute -top-18 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full"
+                  style={{ background: `hsl(${130 + i * 5} 45% ${45 + (i % 3) * 5}%)` }}
+                />
+              </div>
+            ))}
+            {/* Campus walkway/path */}
+            <div 
+              className="absolute bottom-16 h-4"
+              style={{
+                left: -cameraOffset * 0.8,
+                width: 2200,
+                background: 'linear-gradient(90deg, hsl(30 20% 60%), hsl(25 25% 55%))',
+                borderTop: '2px solid hsl(30 15% 50%)',
+              }}
+            />
+            {/* Lamp posts */}
+            {[200, 500, 850, 1200, 1600].map((x, i) => (
+              <div
+                key={`lamp-${i}`}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset * 0.6,
+                  bottom: 100,
+                }}
+              >
+                <div className="w-1 h-20 bg-gray-700 mx-auto" />
+                <div 
+                  className="absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-5 rounded-b-lg"
+                  style={{
+                    background: 'hsl(45 80% 75%)',
+                    boxShadow: '0 0 15px hsl(45 70% 60% / 0.4)',
+                  }}
+                />
+              </div>
+            ))}
+            {/* Testudo statue (UMD mascot - terrapin) */}
+            <div
+              className="absolute"
+              style={{
+                left: 600 - cameraOffset * 0.4,
+                bottom: 120,
+              }}
+            >
+              {/* Pedestal */}
+              <div 
+                className="w-12 h-6 mx-auto rounded-t"
+                style={{ background: 'hsl(0 0% 50%)' }}
+              />
+              {/* Turtle shell */}
+              <div 
+                className="absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-6 rounded-full"
+                style={{ 
+                  background: 'linear-gradient(180deg, hsl(35 60% 45%) 0%, hsl(25 50% 35%) 100%)',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                }}
+              />
+              {/* Head */}
+              <div 
+                className="absolute -top-4 -left-1 w-3 h-3 rounded-full"
+                style={{ background: 'hsl(100 30% 40%)' }}
+              />
+            </div>
           </>
         )}
 
