@@ -1474,6 +1474,137 @@ export const GameWorld = ({ level, player, characterType, collectibles, enemies,
                 }}
               />
             ))}
+
+            {/* Celebration Fireworks */}
+            {[200, 600, 1000, 1400, 1800, 2200, 2600, 3000].map((x, i) => (
+              <div
+                key={`firework-${i}`}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset * 0.3,
+                  top: 60 + (i % 3) * 40,
+                }}
+              >
+                {/* Firework burst center */}
+                <div
+                  className="absolute w-4 h-4 rounded-full animate-ping"
+                  style={{
+                    background: ['hsl(320 90% 60%)', 'hsl(45 100% 55%)', 'hsl(200 90% 60%)', 'hsl(280 85% 60%)', 'hsl(160 80% 55%)', 'hsl(350 90% 55%)', 'hsl(30 100% 60%)', 'hsl(270 90% 65%)'][i],
+                    boxShadow: `0 0 20px ${['hsl(320 90% 60%)', 'hsl(45 100% 55%)', 'hsl(200 90% 60%)', 'hsl(280 85% 60%)', 'hsl(160 80% 55%)', 'hsl(350 90% 55%)', 'hsl(30 100% 60%)', 'hsl(270 90% 65%)'][i]}`,
+                    animationDelay: `${i * 0.4}s`,
+                    animationDuration: '1.5s',
+                  }}
+                />
+                {/* Firework rays/sparks */}
+                {Array.from({ length: 12 }).map((_, j) => (
+                  <div
+                    key={j}
+                    className="absolute animate-pulse"
+                    style={{
+                      width: '2px',
+                      height: 12 + (j % 3) * 6,
+                      background: `linear-gradient(to top, ${['hsl(320 90% 60%)', 'hsl(45 100% 55%)', 'hsl(200 90% 60%)', 'hsl(280 85% 60%)', 'hsl(160 80% 55%)', 'hsl(350 90% 55%)', 'hsl(30 100% 60%)', 'hsl(270 90% 65%)'][i]}, transparent)`,
+                      transform: `rotate(${j * 30}deg)`,
+                      transformOrigin: 'bottom center',
+                      left: '7px',
+                      top: '2px',
+                      animationDelay: `${i * 0.4 + j * 0.05}s`,
+                      opacity: 0.9,
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
+
+            {/* Blast Effects - Large sparkle bursts */}
+            {[350, 900, 1500, 2100, 2700].map((x, i) => (
+              <div
+                key={`blast-${i}`}
+                className="absolute"
+                style={{
+                  left: x - cameraOffset * 0.5,
+                  top: 100 + (i % 2) * 60,
+                }}
+              >
+                {/* Blast core */}
+                <div
+                  className="absolute w-8 h-8 rounded-full"
+                  style={{
+                    background: `radial-gradient(circle, ${['hsl(45 100% 70%)', 'hsl(320 90% 70%)', 'hsl(180 80% 65%)', 'hsl(280 85% 70%)', 'hsl(30 100% 65%)'][i]} 0%, transparent 70%)`,
+                    animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+                    animationDelay: `${i * 0.6}s`,
+                  }}
+                />
+                {/* Blast sparkle particles */}
+                {Array.from({ length: 8 }).map((_, j) => {
+                  const angle = (j / 8) * Math.PI * 2;
+                  const radius = 20 + (j % 2) * 10;
+                  return (
+                    <div
+                      key={j}
+                      className="absolute w-2 h-2 rounded-full animate-pulse"
+                      style={{
+                        left: Math.cos(angle) * radius + 12,
+                        top: Math.sin(angle) * radius + 12,
+                        background: ['hsl(45 100% 75%)', 'hsl(320 90% 75%)', 'white', 'hsl(280 85% 75%)'][j % 4],
+                        boxShadow: `0 0 8px ${['hsl(45 100% 75%)', 'hsl(320 90% 75%)', 'white', 'hsl(280 85% 75%)'][j % 4]}`,
+                        animationDelay: `${i * 0.6 + j * 0.1}s`,
+                        animationDuration: '0.8s',
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            ))}
+
+            {/* Shooting stars / Streak effects */}
+            {[100, 500, 1100, 1700, 2300, 2900].map((x, i) => (
+              <div
+                key={`streak-${i}`}
+                className="absolute overflow-hidden"
+                style={{
+                  left: x - cameraOffset * 0.2,
+                  top: 30 + (i % 4) * 35,
+                  width: '60px',
+                  height: '4px',
+                  transform: `rotate(${15 + i * 5}deg)`,
+                }}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${['hsl(45 100% 70%)', 'hsl(320 90% 65%)', 'hsl(200 85% 65%)', 'white', 'hsl(280 80% 65%)', 'hsl(160 75% 60%)'][i]})`,
+                    animation: 'slide-in-right 1.5s ease-out infinite',
+                    animationDelay: `${i * 0.8}s`,
+                  }}
+                />
+              </div>
+            ))}
+
+            {/* Confetti-like falling sparkles */}
+            {Array.from({ length: 25 }).map((_, i) => (
+              <div
+                key={`confetti-${i}`}
+                className="absolute"
+                style={{
+                  left: (i * 140 + 50) - cameraOffset * 0.6,
+                  top: 20 + (i % 8) * 50,
+                  animation: 'fade-in 2s ease-in-out infinite alternate',
+                  animationDelay: `${i * 0.15}s`,
+                }}
+              >
+                <div
+                  className="rounded-sm"
+                  style={{
+                    width: 4 + (i % 3) * 2,
+                    height: 4 + (i % 2) * 3,
+                    background: ['hsl(320 90% 65%)', 'hsl(45 100% 60%)', 'hsl(200 85% 60%)', 'hsl(280 80% 65%)', 'hsl(160 75% 55%)', 'white'][i % 6],
+                    transform: `rotate(${i * 25}deg)`,
+                    boxShadow: `0 0 6px ${['hsl(320 90% 65%)', 'hsl(45 100% 60%)', 'hsl(200 85% 60%)', 'hsl(280 80% 65%)', 'hsl(160 75% 55%)', 'white'][i % 6]}`,
+                  }}
+                />
+              </div>
+            ))}
           </>
         )}
 
