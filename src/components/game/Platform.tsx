@@ -53,14 +53,14 @@ export const Platform = ({ platform, cameraOffset }: PlatformProps) => {
         boxShadow: 'inset -3px -3px 0 rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.2)',
       }}
     >
-      {/* Grass detail */}
+      {/* Grass detail - deterministic rendering */}
       {platform.type === 'grass' && platform.height > 40 && (
         <div className="absolute top-0 left-0 right-0 h-1 flex justify-around">
-          {Array.from({ length: Math.floor(platform.width / 20) }).map((_, i) => (
+          {Array.from({ length: Math.min(Math.floor(platform.width / 20), 15) }).map((_, i) => (
             <div
               key={i}
               className="w-1 h-2 bg-green-500 rounded-t-full -mt-1"
-              style={{ marginLeft: Math.random() * 10 }}
+              style={{ marginLeft: (i * 7) % 10 }}
             />
           ))}
         </div>
@@ -74,38 +74,55 @@ export const Platform = ({ platform, cameraOffset }: PlatformProps) => {
         </div>
       )}
 
-      {/* Brick pattern */}
+      {/* Brick pattern - CSS-based for performance */}
       {platform.type === 'brick' && (
-        <div className="absolute inset-0 overflow-hidden rounded-t-md opacity-40">
-          {Array.from({ length: Math.ceil(platform.height / 12) }).map((_, rowIndex) => (
-            <div key={rowIndex} className="flex" style={{ marginLeft: rowIndex % 2 === 0 ? 0 : -15 }}>
-              {Array.from({ length: Math.ceil(platform.width / 30) + 1 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-[28px] h-[10px] border border-amber-900/50 m-[1px]"
-                  style={{ background: 'hsl(15 50% 35%)' }}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
+        <div 
+          className="absolute inset-0 overflow-hidden rounded-t-md opacity-40"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 10px,
+                hsl(15 50% 25%) 10px,
+                hsl(15 50% 25%) 12px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                hsl(15 50% 35%),
+                hsl(15 50% 35%) 28px,
+                hsl(15 50% 25%) 28px,
+                hsl(15 50% 25%) 30px
+              )
+            `,
+          }}
+        />
       )}
 
-      {/* Terracotta tile pattern */}
+      {/* Terracotta tile pattern - CSS-based for performance */}
       {platform.type === 'terracotta' && (
-        <div className="absolute inset-0 overflow-hidden rounded-t-md opacity-30">
-          {Array.from({ length: Math.ceil(platform.height / 16) }).map((_, rowIndex) => (
-            <div key={rowIndex} className="flex">
-              {Array.from({ length: Math.ceil(platform.width / 24) + 1 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-[22px] h-[14px] border border-orange-800/40 m-[1px] rounded-sm"
-                  style={{ background: 'hsl(18 45% 50%)' }}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
+        <div 
+          className="absolute inset-0 overflow-hidden rounded-t-md opacity-30"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 14px,
+                hsl(18 45% 40%) 14px,
+                hsl(18 45% 40%) 16px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                hsl(18 45% 50%),
+                hsl(18 45% 50%) 22px,
+                hsl(18 45% 40%) 22px,
+                hsl(18 45% 40%) 24px
+              )
+            `,
+            borderRadius: 'inherit',
+          }}
+        />
       )}
     </div>
   );
