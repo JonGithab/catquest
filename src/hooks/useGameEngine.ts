@@ -272,8 +272,8 @@ export const useGameEngine = () => {
         mobileInputs.current.jump = false;
       }
 
-      // Dash ability for Junnior
-      if (dash && prev.selectedCharacter === 'junnior' && !dashCooldown.current) {
+      // Dash ability for Christo
+      if (dash && prev.selectedCharacter === 'christo' && !dashCooldown.current) {
         newVx = facingRight ? 15 : -15;
         dashCooldown.current = true;
         sounds.playDashSound();

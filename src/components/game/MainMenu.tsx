@@ -141,7 +141,7 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                           </div>
                         </>
                       )}
-                      {char.id === 'junnior' && (
+                      {char.id === 'christo' && (
                         <>
                           {/* Flame */}
                           <motion.div 
