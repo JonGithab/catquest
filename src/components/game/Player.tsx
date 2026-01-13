@@ -9,7 +9,7 @@ interface PlayerProps {
 
 export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => {
   const isDerrik = characterType === 'derrik';
-  const isJunnior = characterType === 'junnior';
+  const isChristo = characterType === 'christo';
   const isLou = characterType === 'lou';
   const isTeri = characterType === 'teri';
   
@@ -100,7 +100,7 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           />
         </div>
 
-        {/* Character accessories: Derrik's hat + cane / Junnior's flame / Lou's wings / Teri's claws */}
+        {/* Character accessories: Derrik's hat + cane / Christo's flame / Lou's wings / Teri's claws */}
         {isDerrik ? (
           <>
             {/* Derrik's top hat */}
@@ -188,9 +188,9 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-2 bg-destructive/80 rounded-full" />
             <div className="absolute -top-2 right-0 w-3 h-4 bg-destructive/80 rounded-sm transform rotate-12" />
           </>
-        ) : isJunnior ? (
+        ) : isChristo ? (
           <>
-            {/* Junnior's flame */}
+            {/* Christo's flame */}
             <motion.div 
               className="absolute -top-3 left-1/2 -translate-x-1/2"
               animate={{ 
@@ -203,7 +203,7 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
               <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-3 bg-yellow-400 rounded-t-full" />
             </motion.div>
             
-            {/* Junnior's bike */}
+            {/* Christo's bike */}
             <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-14">
               {/* Back wheel */}
               <motion.div 
@@ -246,8 +246,8 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           </>
         ) : null}
 
-        {/* Legs - hidden for Junnior since on bike */}
-        {!isJunnior && (
+        {/* Legs - hidden for Christo since on bike */}
+        {!isChristo && (
           <>
             <motion.div 
               className="absolute -bottom-2 left-2 w-3 h-4 bg-foreground/30 rounded-b-lg"
