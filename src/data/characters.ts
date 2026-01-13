@@ -4,7 +4,7 @@ export const characters: Record<string, Character> = {
   derrik: {
     id: 'derrik',
     name: 'Derrik',
-    description: 'A distinguished gentleman with the power of double jump. Strong and unstoppable!',
+    description: 'A skilled plumber with the power of double jump. Strong and unstoppable!',
     color: 'primary',
     ability: 'Double Jump',
     speed: 4,

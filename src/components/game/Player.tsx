@@ -100,23 +100,30 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           />
         </div>
 
-        {/* Character accessories: Derrik's hat + cane / Christo's flame / Lou's wings / Teri's claws */}
+        {/* Character accessories: Derrik's plumber gear / Christo's flame / Lou's wings / Teri's claws */}
         {isDerrik ? (
           <>
-            {/* Derrik's top hat */}
-            <div className="absolute -top-5 left-1/2 -translate-x-1/2">
-              <div className="w-8 h-5 bg-gray-800 rounded-t-md" />
-              <div className="w-10 h-2 bg-gray-800 rounded-full -mt-0.5" />
-              <div className="absolute top-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-amber-600" />
+            {/* Derrik's plumber cap */}
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+              <div className="w-10 h-4 bg-red-600 rounded-t-full" />
+              <div className="w-12 h-2 bg-red-700 rounded-full -mt-0.5" />
+              {/* Cap emblem */}
+              <div className="absolute top-1 left-1/2 -translate-x-1/2 w-3 h-2.5 bg-white rounded-full flex items-center justify-center">
+                <div className="w-1.5 h-1.5 bg-red-600 rounded-full" />
+              </div>
             </div>
-            {/* Derrik's cane */}
+            {/* Derrik's wrench */}
             <motion.div 
-              className="absolute top-4 -right-4"
-              animate={player.isMoving ? { rotate: [-10, 10, -10] } : { rotate: 5 }}
+              className="absolute top-4 -right-5 transform rotate-45"
+              animate={player.isMoving ? { rotate: [35, 55, 35] } : { rotate: 45 }}
               transition={{ duration: 0.3, repeat: player.isMoving ? Infinity : 0 }}
             >
-              <div className="w-2 h-12 bg-amber-800 rounded-full" />
-              <div className="absolute -top-1 -left-1 w-4 h-3 bg-amber-700 rounded-t-full border-2 border-amber-900" />
+              {/* Handle */}
+              <div className="w-2.5 h-10 bg-gray-500 rounded-full" style={{ boxShadow: 'inset -1px 0 0 rgba(0,0,0,0.3)' }} />
+              {/* Wrench head */}
+              <div className="absolute -top-2 -left-1.5 w-5.5 h-4 bg-gray-400 rounded-sm" style={{ boxShadow: 'inset 0 2px 0 rgba(255,255,255,0.4)' }}>
+                <div className="absolute top-1 left-1 w-1.5 h-2 bg-gray-600 rounded-sm" />
+              </div>
             </motion.div>
           </>
         ) : isLou ? (
