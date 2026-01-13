@@ -8,20 +8,20 @@ interface PlayerProps {
 }
 
 export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => {
-  const isJorge = characterType === 'jorge';
+  const isDerrik = characterType === 'derrik';
   const isJunnior = characterType === 'junnior';
   const isLou = characterType === 'lou';
   const isTeri = characterType === 'teri';
   
   const getBodyColor = () => {
-    if (isJorge) return 'bg-primary';
+    if (isDerrik) return 'bg-primary';
     if (isLou) return 'bg-foreground';
     if (isTeri) return 'bg-destructive';
     return 'bg-accent';
   };
 
   const getBlushColor = () => {
-    if (isJorge) return 'bg-pink-300';
+    if (isDerrik) return 'bg-pink-300';
     if (isLou) return 'bg-green-700';
     if (isTeri) return 'bg-rose-300';
     return 'bg-orange-300';
@@ -33,8 +33,8 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
       style={{
         left: player.position.x - cameraOffset,
         top: player.position.y,
-        width: isJorge ? 50 : 40,
-        height: isJorge ? 55 : 50,
+        width: isDerrik ? 50 : 40,
+        height: isDerrik ? 55 : 50,
       }}
       animate={{
         scaleX: player.facingRight ? 1 : -1,
@@ -100,16 +100,16 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
           />
         </div>
 
-        {/* Character accessories: Jorge's hat + cane / Junnior's flame / Lou's wings / Teri's claws */}
-        {isJorge ? (
+        {/* Character accessories: Derrik's hat + cane / Junnior's flame / Lou's wings / Teri's claws */}
+        {isDerrik ? (
           <>
-            {/* Jorge's top hat */}
+            {/* Derrik's top hat */}
             <div className="absolute -top-5 left-1/2 -translate-x-1/2">
               <div className="w-8 h-5 bg-gray-800 rounded-t-md" />
               <div className="w-10 h-2 bg-gray-800 rounded-full -mt-0.5" />
               <div className="absolute top-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-amber-600" />
             </div>
-            {/* Jorge's cane */}
+            {/* Derrik's cane */}
             <motion.div 
               className="absolute top-4 -right-4"
               animate={player.isMoving ? { rotate: [-10, 10, -10] } : { rotate: 5 }}
