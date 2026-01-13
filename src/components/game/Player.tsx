@@ -14,16 +14,16 @@ export const Player = ({ player, characterType, cameraOffset }: PlayerProps) => 
   const isTeri = characterType === 'teri';
   
   const getBodyColor = () => {
-    if (isDerrik) return 'bg-primary';
+    if (isDerrik) return 'bg-destructive';
     if (isLou) return 'bg-foreground';
-    if (isTeri) return 'bg-destructive';
+    if (isTeri) return 'bg-primary';
     return 'bg-accent';
   };
 
   const getBlushColor = () => {
-    if (isDerrik) return 'bg-pink-300';
+    if (isDerrik) return 'bg-rose-300';
     if (isLou) return 'bg-green-700';
-    if (isTeri) return 'bg-rose-300';
+    if (isTeri) return 'bg-pink-300';
     return 'bg-orange-300';
   };
   
