@@ -146,25 +146,13 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                       )}
                       {char.id === 'christo' && (
                         <>
-                          {/* Flame */}
-                          <motion.div 
-                            className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-3 sm:w-3 sm:h-4 bg-orange-500 rounded-t-full"
-                            animate={{ y: [0, -2, 0] }}
-                            transition={{ duration: 0.4, repeat: Infinity }}
-                          />
-                          {/* Mini bike */}
-                          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-10">
-                            <motion.div 
-                              className="absolute left-0 bottom-0 w-3 h-3 rounded-full border border-gray-700 bg-gray-800"
-                              animate={{ rotate: 360 }}
-                              transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-                            />
-                            <motion.div 
-                              className="absolute right-0 bottom-0 w-3 h-3 rounded-full border border-gray-700 bg-gray-800"
-                              animate={{ rotate: 360 }}
-                              transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-                            />
-                            <div className="absolute bottom-1 left-1 w-7 h-1 bg-orange-600 rounded-full" />
+                          {/* Dreadlocks */}
+                          <div className="absolute -top-1 left-1/2 -translate-x-1/2 flex gap-0.5">
+                            <div className="w-1 h-4 bg-amber-900 rounded-full transform -rotate-12" />
+                            <div className="w-1 h-5 bg-amber-800 rounded-full transform -rotate-6" />
+                            <div className="w-1 h-4 bg-amber-900 rounded-full" />
+                            <div className="w-1 h-5 bg-amber-800 rounded-full transform rotate-6" />
+                            <div className="w-1 h-4 bg-amber-900 rounded-full transform rotate-12" />
                           </div>
                         </>
                       )}
