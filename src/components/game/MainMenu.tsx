@@ -127,17 +127,20 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                       {/* Character-specific accessories */}
                       {char.id === 'derrik' && (
                         <>
-                          {/* Top hat */}
-                          <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                            <div className="w-4 h-3 bg-gray-800 rounded-t-md" />
-                            <div className="w-5 h-1 bg-gray-800 rounded-full -mt-0.5" />
+                          {/* Plumber cap */}
+                          <div className="absolute -top-2 left-1/2 -translate-x-1/2">
+                            <div className="w-6 h-2.5 bg-red-600 rounded-t-full" />
+                            <div className="w-7 h-1 bg-red-700 rounded-full -mt-0.5" />
+                            <div className="absolute top-0.5 left-1/2 -translate-x-1/2 w-2 h-1.5 bg-white rounded-full" />
                           </div>
-                          {/* Sledge hammer */}
-                          <div className="absolute top-3 -right-3">
+                          {/* Wrench */}
+                          <div className="absolute top-4 -right-2.5 transform rotate-45">
                             {/* Handle */}
-                            <div className="w-1 h-9 bg-amber-700 rounded-full" />
-                            {/* Hammer head */}
-                            <div className="absolute -top-1 -left-1.5 w-4 h-3 bg-gray-600 rounded-sm" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3)' }} />
+                            <div className="w-1.5 h-6 bg-gray-500 rounded-full" />
+                            {/* Wrench head */}
+                            <div className="absolute -top-1 -left-1 w-3.5 h-2.5 bg-gray-400 rounded-sm" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.4)' }}>
+                              <div className="absolute top-0.5 left-0.5 w-1 h-1.5 bg-gray-600 rounded-sm" />
+                            </div>
                           </div>
                         </>
                       )}
