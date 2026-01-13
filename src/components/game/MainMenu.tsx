@@ -107,9 +107,9 @@ export const MainMenu = ({ onStartGame, onSelectLevel }: MainMenuProps) => {
                   >
                     {/* Character preview */}
                     <div className={`mx-auto mb-2 rounded-t-full rounded-b-lg relative overflow-hidden ${
-                      char.id === 'derrik' ? 'w-12 h-14 sm:w-14 sm:h-16 bg-primary' : 
+                      char.id === 'derrik' ? 'w-12 h-14 sm:w-14 sm:h-16 bg-destructive' : 
                       char.id === 'lou' ? 'w-10 h-12 sm:w-12 sm:h-14 bg-foreground' : 
-                      char.id === 'teri' ? 'w-10 h-12 sm:w-12 sm:h-14 bg-destructive' : 'w-10 h-12 sm:w-12 sm:h-14 bg-accent'
+                      char.id === 'teri' ? 'w-10 h-12 sm:w-12 sm:h-14 bg-primary' : 'w-10 h-12 sm:w-12 sm:h-14 bg-accent'
                     }`}>
                       {/* Lou's camo pattern */}
                       {char.id === 'lou' && (
