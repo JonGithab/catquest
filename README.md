@@ -462,4 +462,4 @@ cameraOffset = lerp(cameraOffset, targetOffset, 0.1);
 
 ---
 
-*Documentation generated for CatQuest v1.0*
+*Documentation generated for CatQuest v1.5*
